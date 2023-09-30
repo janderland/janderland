@@ -1,5 +1,3 @@
-# jander.land
-
 I'm Jon. I enjoy programming, cooking, musicing, and
 pondering.
 
