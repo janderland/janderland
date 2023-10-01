@@ -34,13 +34,16 @@ body {
 
 header {
   font-family: "Roboto";
+  display: flex;
 
   .jander {
+    display: inline-block;
     color: var(--colorE);
     font-size: 120px;
   }
 
   .land {
+    display: inline-block;
     color: var(--colorD);
     font-size: 100px;
   }
