@@ -1,7 +1,1 @@
-pandoc \
-  -st html \
-  -o index.html \
-  --section-divs \
-  --css jander.css \
-  --metadata title="jander.land" \
-  readme.md
+pandoc -t html -o index.html --template index.tmpl --metadata title="jander.land" --css jander.css readme.md

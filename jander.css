@@ -1,5 +1,4 @@
-body {
-
+:root {
   /* 
    * base16 "eighties" color scheme
    * http://chriskempson.com/projects/base16/
@@ -21,11 +20,30 @@ body {
   --colorD: rgb(102, 153, 204);
   --colorE: rgb(204, 153, 204);
   --colorF: rgb(210, 123, 83);
+}
 
-
+body {
+  font-family: "Merriweather";
   background-color: var(--color0);
   color: var(--color5);
 
+  max-width: 600px;
+  padding: 0 10px;
+  margin: 0 auto;
+}
+
+header {
+  font-family: "Roboto";
+
+  .jander {
+    color: var(--colorE);
+    font-size: 120px;
+  }
+
+  .land {
+    color: var(--colorD);
+    font-size: 100px;
+  }
 }
 
 a:link {

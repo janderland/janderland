@@ -1,6 +1,3 @@
-I'm Jon. I enjoy programming, cooking, musicing, and
-pondering.
-
 ## Projects
 
 - [fdbq](https://github.com/janderland/fdbq) - query
