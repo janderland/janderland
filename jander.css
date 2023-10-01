@@ -35,11 +35,13 @@ body {
 header {
   font-family: "Roboto";
   display: flex;
+  padding-left: 120px;
 
   .jander {
     display: inline-block;
     color: var(--colorE);
     font-size: 100px;
+    margin-left: -120px;
   }
 
   .land {

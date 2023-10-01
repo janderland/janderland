@@ -4,5 +4,5 @@
   language for [Foundation
   DB](https://www.foundationdb.org/)
 
-- [Wish Banana](http://wishbanana.com/) - shitty multiplayer
-  browser game
+- [wish banana](http://wishbanana.com/) - shitty multiplayer
+  game
