@@ -39,13 +39,13 @@ header {
   .jander {
     display: inline-block;
     color: var(--colorE);
-    font-size: 120px;
+    font-size: 100px;
   }
 
   .land {
     display: inline-block;
     color: var(--colorD);
-    font-size: 100px;
+    font-size: 85px;
   }
 }
 
