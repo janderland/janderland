@@ -35,18 +35,29 @@ body {
 header {
   font-family: "Roboto";
   display: flex;
-  padding-left: 120px;
 
   .jander {
     display: inline-block;
     color: var(--colorE);
-    font-size: 100px;
-    margin-left: -120px;
+    font-size: 25px;
   }
 
   .land {
     display: inline-block;
     color: var(--colorD);
+    font-size: 22px;
+  }
+}
+
+header.home {
+  padding-left: 120px;
+
+  .jander {
+    font-size: 100px;
+    margin-left: -120px;
+  }
+
+  .land {
     font-size: 85px;
   }
 }

@@ -1,4 +1,4 @@
-## Projects
+# Projects
 
 - [fdbq](https://github.com/janderland/fdbq) - query
   language for [Foundation
