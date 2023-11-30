@@ -1,23 +1,23 @@
-OutDir=site
+OutDir=build
 PostsDir=posts
-ImagesDir=images
 
+IndexPage=$(OutDir)/index.html
 PostPages=$(patsubst $(PostsDir)/%.md,$(OutDir)/%.html,$(shell find $(PostsDir) -name '*.md'))
-Pages=$(OutDir)/index.html $(PostPages)
+Pages=$(IndexPage) $(PostPages)
 
 .PHONY: all
-all: $(OutDir) $(OutDir)/style.css $(OutDir)/index.html $(PostPages)
+all: $(OutDir) $(OutDir)/style.css $(Pages)
 
 .PHONY: open
 open: all
-	open $(OutDir)/index.html
+	open $(IndexPage)
 
 .PHONY: clean
 clean:
 	rm -rf $(OutDir)
 
-$(OutDir)/index.html: readme.md index.tmpl
-	pandoc -t html -o $@ --template index.tmpl --metadata title="jander.land" $<
+$(IndexPage): $(Metadata) readme.md index.tmpl
+	pandoc -t html -o $@ --template index.tmpl --metadata-file md.yaml $<
 
 $(OutDir)/%.html: $(PostsDir)/%.md post.tmpl
 	pandoc -t html -o $@ --template post.tmpl --metadata title="$*" $<

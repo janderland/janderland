@@ -12,6 +12,14 @@
 <header class="home">
   <h1><span class="jander">jander</span><span class="land">.land</span></h1>
 </header>
-$body$
+${body}
+${if(posts)}
+<h1>Posts</h1>
+<ul>
+${for(posts)}
+<a href="${it}.html"><li>${it}</li></a>
+${endfor}
+</ul>
+${endif}
 </body>
 </html>
