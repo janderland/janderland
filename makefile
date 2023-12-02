@@ -16,11 +16,11 @@ open: all
 clean:
 	rm -rf $(OutDir)
 
-$(IndexPage): $(Metadata) readme.md index.tmpl
-	pandoc -t html -o $@ --template index.tmpl --metadata-file md.yaml $<
+$(IndexPage): readme.md index.tmpl index.yaml
+	pandoc -t html -o $@  --template index.tmpl --metadata-file index.yaml readme.md
 
 $(OutDir)/%.html: $(PostsDir)/%.md post.tmpl
-	pandoc -t html -o $@ --template post.tmpl --metadata title="$*" $<
+	pandoc -t html -o $(OutDir)/$*.html --template post.tmpl $<
 
 $(OutDir)/style.css: style.css
 	cp $< $@
