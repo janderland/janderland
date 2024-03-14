@@ -17,10 +17,10 @@ clean:
 	rm -rf $(OutDir)
 
 $(IndexPage): readme.md index.tmpl index.yaml
-	pandoc -t html -o $@  --template index.tmpl --metadata-file index.yaml readme.md
+	pandoc --no-highlight -t html -o $@  --template index.tmpl --metadata-file index.yaml readme.md
 
 $(OutDir)/%.html: $(PostsDir)/%.md post.tmpl
-	pandoc -t html -o $(OutDir)/$*.html --template post.tmpl $<
+	pandoc --no-highlight -t html -o $(OutDir)/$*.html --template post.tmpl $<
 
 $(OutDir)/style.css: style.css
 	cp $< $@

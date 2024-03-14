@@ -23,7 +23,7 @@
 }
 
 body {
-  font-family: "Merriweather";
+  font-family: "Roboto";
   background-color: var(--color0);
   color: var(--color5);
 
@@ -33,7 +33,6 @@ body {
 }
 
 header {
-  font-family: "Roboto";
   display: flex;
 
   .jander {
@@ -54,12 +53,28 @@ header.home {
 
   .jander {
     font-size: 100px;
-    margin-left: -120px;
+    margin-left: -110px;
   }
 
   .land {
     font-size: 85px;
   }
+}
+
+table, th, td {
+  border-collapse: collapse;
+  border: 1px dashed;
+}
+
+th, td {
+  padding: 5px 10px;
+}
+
+blockquote {
+  border-left: 10px solid var(--color2);
+  padding: 5px 10px;
+  margin: 10px 0;
+  background-color: var(--color1);
 }
 
 a:link {
