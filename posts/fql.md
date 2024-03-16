@@ -2,10 +2,11 @@
 title: Foundation QL
 ...
 
-Foundation QL is a query language for Foundation DB. FQL
-aims to make FDB's semantics feel natural and intuitive.
-Common patterns like index indirection and chunked range
-reads are first class citizens.
+Foundation QL is a query language for [Foundation
+DB](https://www.foundationdb.org/). FQL aims to make FDB's
+semantics feel natural and intuitive. Common patterns like
+index indirection and chunked range reads are first class
+citizens.
 
 FQL may also be used as a [Go API](#language-integration)
 which is structurally equivalent to the query language.
@@ -169,17 +170,17 @@ TODO: Finish section.
 When integrating SQL into other languages, there are usually
 two choices each with their own drawbacks:
 
-1. Write literal SQL strings into your code. This is simple
-   but type safety isn't usually checked till runtime.
+1. Write literal _SQL strings_ into your code. This is
+   simple but type safety isn't usually checked till
+   runtime.
 
-2. Use an ORM and/or code generation. This is more complex
-   and sometimes doesn't perfectly model SQL semantics, but
-   does provide type safety.
+2. Use an _ORM_. This is more complex and sometimes doesn't
+   perfectly model SQL semantics, but does provide type
+   safety.
 
 FQL leans towards option #2 by providing a Go API which is
-structurally equivalent to the query language. This allows
-FQL semantics to be modeled in the host language's type
-system.
+structurally equivalent to the query language, allowing FQL
+semantics to be modeled in the host language's type system.
 
 This Go API may also be viewed as an FDB layer which unifies
 the directory & tuple layers with the FDB base API.
@@ -198,7 +199,8 @@ import (
 
 func _() {
   fdb.MustAPIVersion(620)
-  eg := engine.New(facade.NewTransactor(fdb.MustOpenDefault(), directory.Root()))
+  eg := engine.New(facade.NewTransactor(
+    fdb.MustOpenDefault(), directory.Root()))
 
   // /user/entry(22573,"Goodwin","Samuels")=nil
   query := kv.KeyValue{
@@ -224,40 +226,3 @@ func _() {
 }
 ```
 
-Code generation tooling could be provided to lessen the
-verbosity of the host language's syntax.
-
-> __NOTE:__ This code generation is not currently 
-> implemented.
-
-```go
-package example
-
-import (
-  "github.com/apple/foundationdb/bindings/go/src/fdb"
-  "github.com/apple/foundationdb/bindings/go/src/fdb/directory"
-
-  "github.com/janderland/fdbq/engine"
-  "github.com/janderland/fdbq/engine/facade"
-  kv "github.com/janderland/fdbq/keyval"
-)
-
-// Generate a function `getFullName` which binds args to the query.
-//go:generate fql --gen getFullName '/user/entry(?,<string>,<string>)'
-
-func _() {
-  fdb.MustAPIVersion(620)
-  eg := engine.New(facade.NewTransactor(fdb.MustOpenDefault(), directory.Root()))
-
-  const userID = 22573
-  // Call the generated function which creates the query.
-  query := getFullName(userID)
-  res, err := eg.SingleRead(query)
-  if err != nil {
-    panic(err)
-  }
-  
-  firstName := res.Key.Tuple[1].(string)
-  LastName := res.Key.Tuple[2].(string)
-}
-```
