@@ -2,6 +2,17 @@
 title: Foundation QL
 ...
 
+```lang-fql
+/user/index/surname("Johnson",<userID:int>)
+/user(:userID,...)
+```
+
+```lang-fql {.result}
+/user(24335,"Andrew","Johnson",23)=nil
+/user(33423,"Ryan","Johnson",54)=nil
+/user(9323,"Timothy","Johnson",37)=nil
+```
+
 Foundation QL is a query language for [Foundation
 DB](https://www.foundationdb.org/). FQL aims to make FDB's
 semantics feel natural and intuitive. Common patterns like
@@ -25,7 +36,7 @@ An FQL query looks like a key-value. Queries include
 sections for a directory, tuple, and value. FQL can only 
 access keys encoded by the directory & tuples layers.
 
-```fql
+```lang-fql
 /my/directory("my","tuple")=4000
 ```
 
@@ -33,7 +44,7 @@ FQL queries may define a single key-value to be written (as
 shown above) or may define a set of key-values to be read
 from the database.
 
-```fql
+```lang-fql
 /my/directory("my","tuple")=<>
 ```
 
@@ -44,7 +55,7 @@ key exists.
 FQL queries can also perform range reads by including a
 variable in the tuple section.
 
-```fql
+```lang-fql
 /my/directory(<>,"tuple")=<>
 ```
 
@@ -56,14 +67,14 @@ and would be returned.
 All key-values with a certain prefix can be range read by
 ending the tuple with `...`.
 
-```fql
+```lang-fql
 /my/directory("my","tuple",...)=<>
 ```
 
 Including a variable in the directory tells FQL to perform
 the read on all directory paths matching the schema.
 
-```fql
+```lang-fql
 /<>/directory("my","tuple")=<>
 ```
 
@@ -71,7 +82,7 @@ The value section may be omitted to imply a variable in
 that section, meaning the following query is semantically
 identical to the one above.
 
-```fql
+```lang-fql
 /<>/directory("my","tuple")
 ```
 
@@ -144,7 +155,7 @@ defining a set of possible key-values stored in the DB.
 You can further limit the set of key-values read by
 including a type constraint in the variable.
 
-```fql
+```lang-fql
 /my/directory("tuple",<int|string>)=<tuple>
 ```
 
@@ -156,7 +167,7 @@ a tuple.
 
 TODO: Finish section.
 
-```fql
+```lang-fql
 /user/index/surname("Johnson",<userID:int>)
 /user/entry(:userID,...)
 ```
@@ -185,7 +196,7 @@ semantics to be modeled in the host language's type system.
 This Go API may also be viewed as an FDB layer which unifies
 the directory & tuple layers with the FDB base API.
 
-```go
+```lang-go
 package example
 
 import (
