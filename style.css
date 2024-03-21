@@ -64,11 +64,9 @@ header.home {
 }
 
 table {
-  box-sizing: border-box;
-  border-collapse: separate;
-  border-spacing: 0;
   width: 100%;
   margin: 2rem 0;
+  border-spacing: 0;
 }
 
 table tr th,
@@ -76,21 +74,18 @@ table tr td {
   padding: 0.5rem 1rem;
 }
 
-table tr:last-child td {
-  border-bottom: none;
-}
-
 table tr th {
   background-color: var(--color1);
-  text-transform: uppercase;
 }
 
 table tr:first-child th:first-child {
   border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
 }
 
 table tr:first-child th:last-child {
   border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
 }
 
 blockquote {
@@ -115,11 +110,14 @@ pre > code {
   overflow-x: auto;
 }
 
-pre.result > code {
-  margin-top: -2rem;
-  background-color: var(--color0);
-  padding: 1rem 1rem;
-  border: 1rem solid var(--color1);
+pre.result {
+  position: relative;
+  z-index: -1;
+  code {
+    margin-top: -2rem;
+    background-color: var(--color2);
+    padding: 2rem 2rem 1rem 2rem;
+  }
 }
 
 a:link {
