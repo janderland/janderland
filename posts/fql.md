@@ -8,9 +8,9 @@ title: Foundation QL
 ```
 
 ```lang-fql {.result}
+/user(9323,"Timothy","Johnson",37)=nil
 /user(24335,"Andrew","Johnson",23)=nil
 /user(33423,"Ryan","Johnson",54)=nil
-/user(9323,"Timothy","Johnson",37)=nil
 ```
 
 Foundation QL is a query language for [Foundation
