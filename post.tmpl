@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title>${title}</title>
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>${title}</title>
-  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+  <link href="eighties.css" rel="stylesheet" >
+  <link href="style.css" rel="stylesheet"/>
+  <script src="highlight.js"></script>
 </head>
 <body>
 <header>
@@ -16,5 +19,16 @@
 <h1>${title}</h1>
 <span class="date">${date}</span>
 ${body}
+<script>
+hljs.debugMode();
+hljs.registerLanguage('fql', (hljs) => ({
+  keywords: {
+    $$pattern: /[^\/\(\)=,<|:>\s]+/,
+    keyword: ['int', 'uint', 'bool', 'float', 'bigint', 'string', 'bytes', 'uuid', 'tuple'],
+    literal: ['nil', 'true', 'false', '...'],
+  },
+}));
+hljs.highlightAll();
+</script>
 </body>
 </html>

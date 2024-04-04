@@ -1,29 +1,41 @@
-OutDir=build
-PostsDir=posts
+OUT_DIR=build
+POSTS_DIR=posts
+CSS_DIR=css
+JS_DIR=js
 
-IndexPage=$(OutDir)/index.html
-PostPages=$(patsubst $(PostsDir)/%.md,$(OutDir)/%.html,$(shell find $(PostsDir) -name '*.md'))
-Pages=$(IndexPage) $(PostPages)
+# Non-HTML files copied into build dir.
+ASSETS=$(addprefix $(OUT_DIR)/,style.css eighties.css highlight.js go.js)
+
+# Pages generated from markdown.
+POST_PAGES=$(patsubst $(POSTS_DIR)/%.md,$(OUT_DIR)/%.html,$(shell find $(POSTS_DIR) -name '*.md'))
+
+INDEX_PAGE=$(OUT_DIR)/index.html
 
 .PHONY: all
-all: $(OutDir) $(OutDir)/style.css $(Pages)
+all: $(OUT_DIR) $(ASSETS) $(INDEX_PAGE) $(POST_PAGES)
 
 .PHONY: open
 open: all
-	open $(IndexPage)
+	open $(INDEX_PAGE)
 
 .PHONY: clean
 clean:
-	rm -rf $(OutDir)
+	rm -rf $(OUT_DIR)
 
-$(IndexPage): readme.md index.tmpl index.yaml
-	pandoc --no-highlight -t html -o $@  --template index.tmpl --metadata-file index.yaml readme.md
+$(INDEX_PAGE): readme.md index.tmpl index.yaml
+	pandoc --no-highlight -t html -o $@ --template index.tmpl --metadata-file index.yaml readme.md
 
-$(OutDir)/%.html: $(PostsDir)/%.md post.tmpl
-	pandoc --no-highlight -t html -o $(OutDir)/$*.html --template post.tmpl $<
+$(OUT_DIR)/%.html: $(POSTS_DIR)/%.md post.tmpl
+	pandoc --no-highlight -t html -o $(OUT_DIR)/$*.html --template post.tmpl $<
 
-$(OutDir)/style.css: style.css
+$(OUT_DIR)/%.css: $(CSS_DIR)/%.css
 	cp $< $@
 
-$(OutDir):
+$(OUT_DIR)/%.js: $(JS_DIR)/%.js
+	cp $< $@
+
+$(OUT_DIR)/%: %
+	cp $< $@
+
+$(OUT_DIR):
 	mkdir $@
