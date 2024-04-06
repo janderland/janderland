@@ -1,3 +1,4 @@
+/*
 pre code.hljs {
   display: block;
   overflow-x: auto;
@@ -6,6 +7,7 @@ pre code.hljs {
 code.hljs {
   padding: 3px 5px
 }
+*/
 /*!
   Theme: Eighties
   Author: Chris Kempson (http://chriskempson.com)
@@ -39,6 +41,7 @@ base0D  #6699cc  Functions, Methods, Attribute IDs, Headings
 base0E  #cc99cc  Keywords, Storage, Selector, Markup Italic, Diff Changed
 base0F  #d27b53  Deprecated, Opening/Closing Embedded Language Tags, e.g. <?php ?>
 */
+/*
 pre code.hljs {
   display: block;
   overflow-x: auto;
@@ -47,6 +50,7 @@ pre code.hljs {
 code.hljs {
   padding: 3px 5px
 }
+*/
 .hljs {
   color: #d3d0c8;
   background: #393939
