@@ -21,12 +21,40 @@
 ${body}
 <script>
 hljs.debugMode();
+
+const STR = {
+  scope: 'string',
+  begin: /"/,
+  end: /"/,
+};
+
+const DIR = {
+  scope: 'attr',
+  begin: /\//,
+  end: /(?=\()|$$/,
+  keyword: {
+    $$pattern: /[^\/]+/,
+  },
+  contains: [STR],
+};
+
+const TUP = {
+  scope: 'type',
+  begin: /\(/,
+  end: /\)/,
+  keyword: {
+    $$pattern: /[^,\s]+/,
+  },
+  contains: [STR],
+};
+
 hljs.registerLanguage('fql', (hljs) => ({
   keywords: {
     $$pattern: /[^\/\(\)=,<|:>\s]+/,
     keyword: ['int', 'uint', 'bool', 'float', 'bigint', 'string', 'bytes', 'uuid', 'tuple'],
     literal: ['nil', 'true', 'false', '...'],
   },
+  contains: [DIR, TUP],
 }));
 hljs.highlightAll();
 </script>
