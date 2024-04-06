@@ -28,6 +28,13 @@ const STR = {
   end: /"/,
 };
 
+const DIR_STR = {
+  scope: 'string',
+  begin: /[^\/]/,
+  end: /(?=\/)/,
+  endsWithParent: true,
+};
+
 const DIR = {
   scope: 'attr',
   begin: /\//,
@@ -35,7 +42,7 @@ const DIR = {
   keyword: {
     $$pattern: /[^\/]+/,
   },
-  contains: [STR],
+  contains: [STR, DIR_STR],
 };
 
 const TUP = {
