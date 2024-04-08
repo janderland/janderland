@@ -35,6 +35,18 @@ const DIR_STR = {
   endsWithParent: true,
 };
 
+const VAR = {
+  scope: 'type',
+  begin: /</,
+  end: />/,
+};
+
+const VAR_REF = {
+  scope: 'type',
+  begin: /:/,
+  end: /,|$$/,
+};
+
 const DIR = {
   scope: 'attr',
   begin: /\//,
@@ -46,13 +58,13 @@ const DIR = {
 };
 
 const TUP = {
-  scope: 'type',
+  scope: 'attr',
   begin: /\(/,
   end: /\)/,
   keyword: {
     $$pattern: /[^,\s]+/,
   },
-  contains: [STR],
+  contains: [STR, VAR, VAR_REF],
 };
 
 hljs.registerLanguage('fql', (hljs) => ({
