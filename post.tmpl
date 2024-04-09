@@ -28,6 +28,12 @@ const STR = {
   end: /"/,
 };
 
+const NUM = {
+  scope: 'number',
+  begin: /[^\/,\(\)=<>]/,
+  end: /(?=[\/,\(\)=<>])/,
+};
+
 const DIR_STR = {
   scope: 'string',
   begin: /[^\/]/,
@@ -36,34 +42,38 @@ const DIR_STR = {
 };
 
 const VAR = {
-  scope: 'type',
+  scope: 'variable',
   begin: /</,
   end: />/,
 };
 
 const VAR_REF = {
-  scope: 'type',
+  scope: 'variable',
   begin: /:/,
-  end: /,|$$/,
+  end: /,/,
 };
 
 const DIR = {
-  scope: 'attr',
+  scope: 'directory',
   begin: /\//,
-  end: /(?=\()|$$/,
-  keyword: {
-    $$pattern: /[^\/]+/,
-  },
+  end: /(?=\()/,
   contains: [STR, DIR_STR],
 };
 
 const TUP = {
-  scope: 'attr',
+  scope: 'tuple',
   begin: /\(/,
   end: /\)/,
   keyword: {
     $$pattern: /[^,\s]+/,
   },
+  contains: [STR, VAR, VAR_REF, NUM],
+};
+
+const VAL = {
+  scope: 'value',
+  begin: /=/,
+  end: /\n/,
   contains: [STR, VAR, VAR_REF],
 };
 
@@ -73,7 +83,7 @@ hljs.registerLanguage('fql', (hljs) => ({
     keyword: ['int', 'uint', 'bool', 'float', 'bigint', 'string', 'bytes', 'uuid', 'tuple'],
     literal: ['nil', 'true', 'false', '...'],
   },
-  contains: [DIR, TUP],
+  contains: [DIR, TUP, VAL],
 }));
 hljs.highlightAll();
 </script>
