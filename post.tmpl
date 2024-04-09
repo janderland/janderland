@@ -73,7 +73,11 @@ const TUP = {
 const VAL = {
   scope: 'value',
   begin: /=/,
-  end: /\n/,
+  end: /\s/,
+  keywords: {
+    $$pattern: /[^=\s]+/,
+    literal: ['nil', 'true', 'false'],
+  },
   contains: [STR, VAR, VAR_REF],
 };
 
