@@ -65,7 +65,8 @@ const TUP = {
   begin: /\(/,
   end: /\)/,
   keyword: {
-    $$pattern: /[^,\s]+/,
+    $$pattern: /[^,\)\s]+/,
+    literal: ['nil', 'true', 'false'],
   },
   contains: [STR, VAR, VAR_REF, NUM],
 };
