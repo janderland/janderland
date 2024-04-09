@@ -45,6 +45,10 @@ const VAR = {
   scope: 'variable',
   begin: /</,
   end: />/,
+  keywords: {
+    $$pattern: /[^:|<>]+/,
+    keyword: ['int', 'uint', 'bool', 'float', 'bigint', 'string', 'bytes', 'uuid', 'tuple'],
+  },
 };
 
 const VAR_REF = {
@@ -64,7 +68,7 @@ const TUP = {
   scope: 'tuple',
   begin: /\(/,
   end: /\)/,
-  keyword: {
+  keywords: {
     $$pattern: /[^,\)\s]+/,
     literal: ['nil', 'true', 'false'],
   },
