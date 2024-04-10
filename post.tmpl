@@ -30,8 +30,8 @@ const STR = {
 
 const NUM = {
   scope: 'number',
-  begin: /[^\/,\(\)=<>]/,
-  end: /(?=[\/,\(\)=<>])/,
+  begin: /[^\/,\(\)=<>\s]/,
+  end: /(?=[\/,\(\)=<>\s])/,
 };
 
 const DIR_STR = {
@@ -52,7 +52,7 @@ const VAR = {
 };
 
 const VAR_REF = {
-  scope: 'variable',
+  scope: 'reference',
   begin: /:/,
   end: /,/,
 };
@@ -83,17 +83,19 @@ const VAL = {
     $$pattern: /[^=\s]+/,
     literal: ['nil', 'true', 'false'],
   },
-  contains: [STR, VAR, VAR_REF],
+  contains: [STR, VAR, VAR_REF, NUM],
 };
 
 hljs.registerLanguage('fql', (hljs) => ({
-  keywords: {
-    $$pattern: /[^\/\(\)=,<|:>\s]+/,
-    keyword: ['int', 'uint', 'bool', 'float', 'bigint', 'string', 'bytes', 'uuid', 'tuple'],
-    literal: ['nil', 'true', 'false', '...'],
+  classNameAliases: {
+    directory: 'built_in',
+    tuple: 'built_in',
+    value: 'built_in',
+    reference: 'variable',
   },
   contains: [DIR, TUP, VAL],
 }));
+
 hljs.highlightAll();
 </script>
 </body>
