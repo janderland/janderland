@@ -4,7 +4,7 @@ CSS_DIR=css
 JS_DIR=js
 
 # Non-HTML files copied into build dir.
-ASSETS=$(addprefix $(OUT_DIR)/,style.css eighties.css highlight.js go.js)
+ASSETS=$(addprefix $(OUT_DIR)/,style.css eighties.css highlight.js kvq.js go.js)
 
 # Pages generated from markdown.
 POST_PAGES=$(patsubst $(POSTS_DIR)/%.md,$(OUT_DIR)/%.html,$(shell find $(POSTS_DIR) -name '*.md'))

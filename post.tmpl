@@ -11,6 +11,8 @@
   <link href="eighties.css" rel="stylesheet" >
   <link href="style.css" rel="stylesheet"/>
   <script src="highlight.js"></script>
+  <script src="kvq.js"></script>
+  <script src="go.js"></script>
 </head>
 <body>
 <header>
@@ -21,81 +23,6 @@
 ${body}
 <script>
 hljs.debugMode();
-
-const STR = {
-  scope: 'string',
-  begin: /"/,
-  end: /"/,
-};
-
-const NUM = {
-  scope: 'number',
-  begin: /[^\/,\(\)=<>\s]/,
-  end: /(?=[\/,\(\)=<>\s])/,
-};
-
-const DIR_STR = {
-  scope: 'string',
-  begin: /[^\/]/,
-  end: /(?=\/)/,
-  endsWithParent: true,
-};
-
-const VAR = {
-  scope: 'variable',
-  begin: /</,
-  end: />/,
-  keywords: {
-    $$pattern: /[^:|<>]+/,
-    keyword: ['int', 'uint', 'bool', 'float', 'bigint', 'string', 'bytes', 'uuid', 'tuple'],
-  },
-};
-
-const VAR_REF = {
-  scope: 'reference',
-  begin: /:/,
-  end: /,/,
-};
-
-const DIR = {
-  scope: 'directory',
-  begin: /\//,
-  end: /(?=\()/,
-  contains: [STR, DIR_STR],
-};
-
-const TUP = {
-  scope: 'tuple',
-  begin: /\(/,
-  end: /\)/,
-  keywords: {
-    $$pattern: /[^,\)\s]+/,
-    literal: ['nil', 'true', 'false'],
-  },
-  contains: [STR, VAR, VAR_REF, NUM],
-};
-
-const VAL = {
-  scope: 'value',
-  begin: /=/,
-  end: /\s/,
-  keywords: {
-    $$pattern: /[^=\s]+/,
-    literal: ['nil', 'true', 'false'],
-  },
-  contains: [STR, VAR, VAR_REF, NUM],
-};
-
-hljs.registerLanguage('fql', (hljs) => ({
-  classNameAliases: {
-    directory: 'built_in',
-    tuple: 'built_in',
-    value: 'built_in',
-    reference: 'variable',
-  },
-  contains: [DIR, TUP, VAL],
-}));
-
 hljs.highlightAll();
 </script>
 </body>
