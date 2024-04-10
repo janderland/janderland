@@ -1,24 +1,24 @@
 (function() {
-  const STR = {
+  const STRING = {
     scope: 'string',
     begin: /"/,
     end: /"/,
   };
 
-  const DIR_STR = {
+  const DSTRING = {
     scope: 'string',
     begin: /[^\/]/,
     end: /(?=\/)/,
     endsWithParent: true,
   };
 
-  const NUM = {
+  const DATA = {
     scope: 'number',
     begin: /[^\/,\(\)=<>\s]/,
     end: /(?=[\/,\(\)=<>\s])/,
   };
 
-  const VAR = {
+  const VARIABLE = {
     scope: 'variable',
     begin: /</,
     end: />/,
@@ -28,20 +28,20 @@
     },
   };
 
-  const VAR_REF = {
+  const REFERENCE = {
     scope: 'reference',
     begin: /:/,
     end: /,/,
   };
 
-  const DIR = {
+  const DIRECTORY = {
     scope: 'directory',
     begin: /\//,
     end: /(?=\()/,
-    contains: [STR, DIR_STR],
+    contains: [STRING, DSTRING],
   };
 
-  const TUP = {
+  const TUPLE = {
     scope: 'tuple',
     begin: /\(/,
     end: /\)/,
@@ -49,10 +49,10 @@
       $$pattern: /[^,\)\s]+/,
       literal: ['nil', 'true', 'false'],
     },
-    contains: [STR, VAR, VAR_REF, NUM],
+    contains: [STRING, VARIABLE, REFERENCE, DATA],
   };
 
-  const VAL = {
+  const VALUE = {
     scope: 'value',
     begin: /=/,
     end: /\s/,
@@ -60,7 +60,7 @@
       $$pattern: /[^=\s]+/,
       literal: ['nil', 'true', 'false'],
     },
-    contains: [STR, VAR, VAR_REF, NUM],
+    contains: [STRING, VARIABLE, REFERENCE, DATA],
   };
 
   hljs.registerLanguage('fql', (hljs) => ({
@@ -70,6 +70,6 @@
       value: 'built_in',
       reference: 'variable',
     },
-    contains: [DIR, TUP, VAL],
+    contains: [DIRECTORY, TUPLE, VALUE],
   }));
 })();
