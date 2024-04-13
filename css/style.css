@@ -107,8 +107,8 @@ blockquote {
 
 code {
   font-family: "Fira Code", monospace;
-  background-color: var(--color1);
   border-radius: 0.3rem;
+  background-color: var(--color1);
 }
 
 pre > code {
@@ -120,6 +120,7 @@ pre > code {
   border-radius: 0.5rem;
   overflow-x: auto;
   color: var(--color6);
+  background-color: black;
 }
 
 pre.result {
@@ -127,7 +128,7 @@ pre.result {
   z-index: -1;
   code {
     margin-top: -3rem;
-    background-color: black;
+    background-color: var(--color1);
     padding: 2rem 2rem 1rem 2rem;
   }
 }

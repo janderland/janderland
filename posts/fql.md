@@ -1,97 +1,104 @@
 ---
-title: Foundation QL
+title: KVQ
 ...
 
-```lang-fql
+```lang-kvq
 /user/index/surname("Johnson",<userID:int>)
 /user(:userID,...)
-```
-
-```lang-fql {.result}
+->
 /user(9323,"Timothy","Johnson",37)=nil
 /user(24335,"Andrew","Johnson",23)=nil
 /user(33423,"Ryan","Johnson",54)=nil
 ```
 
-Foundation QL is a query language for [Foundation
-DB](https://www.foundationdb.org/). FQL aims to make FDB's
+KVQ is a query language for [Foundation
+DB](https://www.foundationdb.org/). KVQ aims to make FDB's
 semantics feel natural and intuitive. Common patterns like
 index indirection and chunked range reads are first class
 citizens.
 
-FQL may also be used as a [Go API](#language-integration)
-which is structurally equivalent to the query language.
-
-FQL is a work in-progress: the features mentioned in 
-this document are not all implemented. Unimplemented 
-features will be marked as such with a callout.
-
-This document expects the reader to have a basic 
-understanding of Foundation DB, and it's directory & 
-tuple layers.
+> KVQ is a work in-progress. The features mentioned in this
+> document are not all implemented. Unimplemented features
+> will be marked as such with a callout.
 
 ## Basics
 
-An FQL query looks like a key-value. Queries include
-sections for a directory, tuple, and value. FQL can only 
-access keys encoded by the directory & tuples layers.
+A KVQ query looks like a key-value. It has a key (directory
+& tuple) and value. KVQ can only access keys encoded using
+the directory & tuples
+[layers](https://apple.github.io/foundationdb/layer-concept.html).
 
-```lang-fql
+```lang-kvq
 /my/directory("my","tuple")=4000
 ```
 
-FQL queries may define a single key-value to be written (as
-shown above) or may define a set of key-values to be read
-from the database.
+KVQ queries may define a single key-value to be written, as
+shown above, or may define a set of key-values to be read,
+as shown below.
 
-```lang-fql
+```lang-kvq
 /my/directory("my","tuple")=<>
+->
+/my/directory("my","tuple")=0x0fa0
 ```
 
-The query above has a variable `<>` in its value section 
-and will read a single key-value from the database, if the 
-key exists.
+The query above has a variable `<>` as it's value. Variables
+act as placeholders for any of the supported [data
+elements](#data-elements). This query will return a single
+key-value from the database, if such a key exists.
 
-FQL queries can also perform range reads by including a
-variable in the tuple section.
+KVQ queries can also perform range reads by including
+a variable in the key's tuple. The query below will return
+all key-values which conform to the schema defined by the
+query. 
 
-```lang-fql
-/my/directory(<>,"tuple")=<>
+```lang-kvq
+/my/directory(<>,"tuple")=nil
+->
+/my/directory("your","tuple")=nil
+/my/directory(42,"tuple")=nil
 ```
 
-The query above will range read all key-values which 
-conform to the schema defined by the query. For instance,
-the key-value `/my/directory("my","tuple")=nil` conforms 
-and would be returned.
+All key-values with a certain key prefix can be range read
+by ending the key's tuple with `...`.
 
-All key-values with a certain prefix can be range read by
-ending the tuple with `...`.
-
-```lang-fql
+```lang-kvq
 /my/directory("my","tuple",...)=<>
+->
+/my/directory("my","tuple")=0x0fa0
+/my/directory("my","tuple",47.3)=0x8f3a
+/my/directory("my","tuple",false)=nil
 ```
 
-Including a variable in the directory tells FQL to perform
+A query's value may be omitted to imply a variable, meaning
+the following query is semantically identical to the one
+above.
+
+```lang-kvq
+/my/directory("my","tuple",...)
+->
+/my/directory("my","tuple")=0x0fa0
+/my/directory("my","tuple",47.3)=0x8f3a
+/my/directory("my","tuple",false)=nil
+```
+
+Including a variable in the directory tells KVQ to perform
 the read on all directory paths matching the schema.
 
-```lang-fql
-/<>/directory("my","tuple")=<>
-```
-
-The value section may be omitted to imply a variable in
-that section, meaning the following query is semantically
-identical to the one above.
-
-```lang-fql
+```lang-kvq
 /<>/directory("my","tuple")
+->
+/my/directory("my","tuple")=0x0fa0
+/your/directory("my","tuple")=nil
 ```
 
 ## Data Elements
 
-In an FQL query, the directory, tuple, and value contain
-instances of data elements. FQL utilizes the same types of
-elements as the tuple layer. Example instances of these
-types can be seen below.
+In a KVQ query, the directory, tuple, and value contain
+instances of data elements. KVQ utilizes the same types of
+elements as the [tuple
+layer](https://github.com/apple/foundationdb/blob/main/design/tuple.md).
+Example instances of these types can be seen below.
 
 | Type     | Example                                |
 |:---------|:---------------------------------------|
@@ -106,7 +113,7 @@ types can be seen below.
 | `uuid`   | `5a5ebefd-2193-47e2-8def-f464fc698e31` |
 | `tuple`  | `("hello",27.4,nil)`                   |
 
-> __NOTE:__ `bigint` support is not yet implemented.
+> `bigint` support is not yet implemented.
 
 The directory may only contain strings. Directory strings 
 don't need to be quoted if they only contain alphanumerics, 
@@ -144,9 +151,8 @@ Queries without any variables result in a single key-value
 being written. You can think of these queries as explicitly
 defining a single key-value.
 
-> __NOTE:__ Queries lacking a value section imply a variable
-> in said section and therefore do not result in a write
-> operation.
+> Queries lacking a value section imply a variable in said
+> section and therefore do not result in a write operation.
 
 Queries with variables or `...` result in zero or more
 key-values being read. You can think of these queries as
@@ -155,7 +161,7 @@ defining a set of possible key-values stored in the DB.
 You can further limit the set of key-values read by
 including a type constraint in the variable.
 
-```lang-fql
+```lang-kvq
 /my/directory("tuple",<int|string>)=<tuple>
 ```
 
@@ -167,7 +173,7 @@ a tuple.
 
 TODO: Finish section.
 
-```lang-fql
+```lang-kvq
 /user/index/surname("Johnson",<userID:int>)
 /user/entry(:userID,...)
 ```
@@ -189,8 +195,8 @@ two choices each with their own drawbacks:
    perfectly model SQL semantics, but does provide type
    safety.
 
-FQL leans towards option #2 by providing a Go API which is
-structurally equivalent to the query language, allowing FQL
+KVQ leans towards option #2 by providing a Go API which is
+structurally equivalent to the query language, allowing KVQ
 semantics to be modeled in the host language's type system.
 
 This Go API may also be viewed as an FDB layer which unifies

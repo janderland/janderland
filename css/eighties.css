@@ -50,7 +50,6 @@ pre code.hljs {
 code.hljs {
   padding: 3px 5px
 }
-*/
 .hljs {
   color: #d3d0c8;
   background: #393939
@@ -60,6 +59,7 @@ code.hljs {
   background-color: #515151;
   color: #d3d0c8
 }
+*/
 /* purposely do not highlight these things */
 .hljs-formula,
 .hljs-params,
