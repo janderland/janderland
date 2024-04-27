@@ -63,7 +63,7 @@
     contains: [STRING, VARIABLE, REFERENCE, DATA],
   };
 
-  hljs.registerLanguage('kvq', (hljs) => ({
+  hljs.registerLanguage('fql', (hljs) => ({
     classNameAliases: {
       directory: 'built_in',
       tuple: 'built_in',
