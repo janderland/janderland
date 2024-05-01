@@ -204,10 +204,10 @@ a variable. Variables are specified as a list of data types,
 separated by `|`, wrapped in `<` & `>`.
 
 ```lang-fql
-<int|string>
+<uint|string|uuid|bytes>
 ```
 
-The variable may be empty, including no data types.
+A variable may be empty, including no data types.
 
 ```lang-fql
 <>
