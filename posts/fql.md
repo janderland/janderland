@@ -23,7 +23,7 @@ range reads are first class citizens.
 
 ## Introduction
 
-FQL queries look like a key-values. They have a key, made up
+FQL queries look like key-values. They have a key, made up
 of a directory and a tuple, followed by a `=` and a value.
 FQL can only access keys encoded using the directory & tuple
 [layers](https://apple.github.io/foundationdb/layer-concept.html).
@@ -92,13 +92,11 @@ the read on all directory paths matching the schema.
 /your/directory("my","tuple")=nil
 ```
 
-## Language Structure
+## Grammar
 
 As stated in the [introduction](#Introduction), FQL queries
 are a textual representation of a specific key-value or
-a schema describing the structure of many key-values. These
-queries have the ability to write a key-value, read one or
-more key-values, and list directories.
+a schema describing the structure of many key-values. 
 
 > FQL is a context-free language with a formal
 > [definition](https://github.com/janderland/fdbq/blob/main/syntax.ebnf).
@@ -162,7 +160,7 @@ a tuple or any of the data elements.
 The last element of a tuple may be the `...` token.
 
 ```lang-fql
-(0xFF,"thing",...)
+(0xff,"thing",...)
 ```
 
 Any combination of spaces, tabs, and newlines are allowed
@@ -178,7 +176,7 @@ after the opening brace and commas.
 
 ### Data Elements
 
-In a FQL query, the directory, tuple, and value contain
+In a FQL query, the directory, tuples, and value contain
 instances of data elements. FQL utilizes the same types of
 elements as the [tuple
 layer](https://github.com/apple/foundationdb/blob/main/design/tuple.md).
@@ -199,15 +197,42 @@ Example instances of these types can be seen below.
 
 > `bigint` support is not yet implemented.
 
-The directory may only contain strings. Directory strings 
-don't need to be quoted if they only contain alphanumerics, 
-`.`, or `_`. The tuple & value may contain any of the data
-elements.
+### Variables
 
-For the precise syntax definitions of each data type, see 
-the [syntax document](syntax.ebnf).
+Any [data element](#data-elements) may be replaced with
+a variable. Variables are specified as a list of data types,
+separated by `|`, wrapped in `<` & `>`.
 
-## Data Encoding
+```lang-fql
+<int|string>
+```
+
+The variable may be empty, including no data types.
+
+```lang-fql
+<>
+```
+
+## Semantics
+
+Queries have the ability to write a key-value, read one or
+more key-values, and list directories.
+
+Queries without any variables result in a single key-value
+being written. You can think of these queries as explicitly
+defining a single key-value.
+
+Queries with variables or `...` result in zero or more
+key-values being read. You can think of these queries as
+defining a set of possible key-values stored in the DB.
+
+You can further limit the set of key-values read by
+including a type constraint in the variable.
+
+> Queries lacking a value section imply a variable in said
+> section and therefore do not result in a write operation.
+
+### Data Encoding
 
 The directory and tuple layers are responsible for 
 encoding the data elements in the key section. As for the 
@@ -228,30 +253,6 @@ when present in the value section.
 | `bytes`  | as provided                     |
 | `uuid`   | RFC 4122                        |
 | `tuple`  | tuple layer                     |
-
-## Variables
-
-Queries without any variables result in a single key-value
-being written. You can think of these queries as explicitly
-defining a single key-value.
-
-> Queries lacking a value section imply a variable in said
-> section and therefore do not result in a write operation.
-
-Queries with variables or `...` result in zero or more
-key-values being read. You can think of these queries as
-defining a set of possible key-values stored in the DB.
-
-You can further limit the set of key-values read by
-including a type constraint in the variable.
-
-```lang-fql
-/my/directory("tuple",<int|string>)=<tuple>
-```
-
-In the query above, the 2nd element of the key's tuple must
-be either an integer or string. Likewise, the value must be
-a tuple.
 
 ## Index Indirection
 
