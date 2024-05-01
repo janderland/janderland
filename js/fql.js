@@ -49,7 +49,7 @@
       $$pattern: /[^,\)\s]+/,
       literal: ['nil', 'true', 'false'],
     },
-    contains: [STRING, VARIABLE, REFERENCE, DATA],
+    contains: [STRING, VARIABLE, REFERENCE, DATA, 'self'],
   };
 
   const VALUE = {
@@ -70,6 +70,6 @@
       value: 'built_in',
       reference: 'variable',
     },
-    contains: [DIRECTORY, TUPLE, VALUE],
+    contains: [DIRECTORY, TUPLE, VALUE, VARIABLE],
   }));
 })();
