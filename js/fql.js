@@ -1,8 +1,15 @@
 (function() {
+  const ESCAPE = {
+    scope: 'escape',
+    begin: /\\/,
+    end: /./,
+  };
+
   const STRING = {
     scope: 'string',
     begin: /"/,
     end: /"/,
+    contains: [ESCAPE],
   };
 
   const DSTRING = {
@@ -69,6 +76,7 @@
       tuple: 'built_in',
       value: 'built_in',
       reference: 'variable',
+      escape: 'subst',
     },
     contains: [DIRECTORY, TUPLE, VALUE, VARIABLE],
   }));
