@@ -19,7 +19,7 @@ range reads are first class citizens.
 
 > FQL is a work in-progress. The features mentioned in this
 > document are not all implemented. Unimplemented features
-> will be marked as such with a callout.
+> will be marked as such with a callout like this one.
 
 ## Introduction
 
@@ -41,6 +41,10 @@ as shown below.
 ->
 /my/directory("my","tuple")=0x0fa0
 ```
+
+> `->` is not part of the FQL syntax. It's only used by this
+> document to separate a read query from it's exemplary
+> results.
 
 The query above has a variable `<>` as it's value. Variables
 act as placeholders for any of the supported [data
@@ -164,7 +168,8 @@ The last element of a tuple may be the `...` token.
 ```
 
 Any combination of spaces, tabs, and newlines are allowed
-after the opening brace and commas.
+after the opening brace and commas. Trailing commas are
+allowed.
 
 ```lang-fql
 (
