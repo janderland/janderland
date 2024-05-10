@@ -26,7 +26,7 @@ $(INDEX_PAGE): readme.md index.tmpl index.yaml
 	pandoc --no-highlight -t html -o $@ --template index.tmpl --metadata-file index.yaml readme.md
 
 $(OUT_DIR)/%.html: $(POSTS_DIR)/%.md post.tmpl
-	pandoc --no-highlight -t html -o $(OUT_DIR)/$*.html --template post.tmpl $<
+	pandoc --no-highlight --toc=true -t html -o $(OUT_DIR)/$*.html --template post.tmpl $<
 
 $(OUT_DIR)/%.css: $(CSS_DIR)/%.css
 	cp $< $@

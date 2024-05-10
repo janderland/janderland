@@ -24,8 +24,8 @@ range reads are first class citizens.
 ## Introduction
 
 FQL queries look like key-values. They have a key (directory
-and tuple), followed by a `=`, and a value. FQL can only
-access keys encoded using the directory & tuple
+& tuple) followed by `=` and a value. FQL can only access
+keys encoded using the directory & tuple
 [layers](https://apple.github.io/foundationdb/layer-concept.html).
 
 ```lang-fql
