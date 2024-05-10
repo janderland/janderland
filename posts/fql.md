@@ -98,12 +98,11 @@ the read on all directory paths matching the schema.
 
 ## Grammar
 
-As stated in the [introduction](#Introduction), FQL queries
-are a textual representation of a specific key-value or
-a schema describing the structure of many key-values. 
-
-> FQL is a context-free language with a formal
-> [definition](https://github.com/janderland/fdbq/blob/main/syntax.ebnf).
+This section elaborates on the grammar and structure of FQL
+queries. FQL is a context-free language with a formal
+[definition](https://github.com/janderland/fdbq/blob/main/syntax.ebnf).
+For elaborations on what queries mean and how they're
+implemented, see [Semantics](#semantics).
 
 ### Key-Values
 
@@ -116,10 +115,12 @@ value appended together.
 ```
 
 The value following the `=` may be any of the [data
-elements](#data-elements) or a variable.
+elements](#data-elements) or a [variable](#variables).
 
 ```lang-fql
 /region/north_america(22.3,-8)=("rain","fog")
+/region/north_america(22.3,-8)=<tuple|int>
+/region/north_america(22.3,-8)=-16
 ```
 
 The value may also be the `clear` token.
@@ -153,9 +154,10 @@ The quote character may be backslash escaped:
 
 ### Tuples
 
-A tuple is specified as a sequence of elements, separated by
-commas, wrapped in a pair of curly braces. It may contain
-a tuple or any of the data elements.
+A tuple is specified as a sequence of [data
+elements](#data-elements) and [variables](#variables),
+separated by commas, wrapped in a pair of parenthesis.
+Sub-tuples are allowed.
 
 ```lang-fql
 ("one",2,0x03,("subtuple"),5825d3f8-de5b-40c6-ac32-47ea8b98f7b4)
@@ -206,7 +208,7 @@ Example instances of these types can be seen below.
 
 Any [data element](#data-elements) may be replaced with
 a variable. Variables are specified as a list of data types,
-separated by `|`, wrapped in `<` & `>`.
+separated by `|`, wrapped in angled braces.
 
 ```lang-fql
 <uint|string|uuid|bytes>
