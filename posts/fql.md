@@ -23,9 +23,9 @@ range reads are first class citizens.
 
 ## Introduction
 
-FQL queries look like key-values. They have a key, made up
-of a directory and a tuple, followed by a `=` and a value.
-FQL can only access keys encoded using the directory & tuple
+FQL queries look like key-values. They have a key (directory
+and tuple), followed by a `=`, and a value. FQL can only
+access keys encoded using the directory & tuple
 [layers](https://apple.github.io/foundationdb/layer-concept.html).
 
 ```lang-fql
@@ -71,7 +71,7 @@ by ending the key's tuple with `...`.
 ->
 /my/directory("my","tuple")=0x0fa0
 /my/directory("my","tuple",47.3)=0x8f3a
-/my/directory("my","tuple",false)=nil
+/my/directory("my","tuple",false,0xff9a853c12)=nil
 ```
 
 A query's value may be omitted to imply a variable, meaning
@@ -83,7 +83,7 @@ above.
 ->
 /my/directory("my","tuple")=0x0fa0
 /my/directory("my","tuple",47.3)=0x8f3a
-/my/directory("my","tuple",false)=nil
+/my/directory("my","tuple",false,0xff9a853c12)=nil
 ```
 
 Including a variable in the directory tells FQL to perform
