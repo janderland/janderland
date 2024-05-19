@@ -5,6 +5,12 @@
     end: /./,
   };
 
+  const COMMENT = {
+    scope: 'comment',
+    begin: /%/,
+    end: /\n/,
+  };
+
   const STRING = {
     scope: 'string',
     begin: /"/,
@@ -22,7 +28,7 @@
   const DATA = {
     scope: 'number',
     begin: /[^\/,\(\)=<>\s]/,
-    end: /(?=[\/,\(\)=<>\s])/,
+    end: /(?=[\/,\(\)=<>%\s])/,
   };
 
   const VARIABLE = {
@@ -56,7 +62,7 @@
       $$pattern: /[^,\)\s]+/,
       literal: ['nil', 'true', 'false'],
     },
-    contains: [STRING, VARIABLE, REFERENCE, DATA, 'self'],
+    contains: [STRING, VARIABLE, REFERENCE, COMMENT, DATA, 'self'],
   };
 
   const VALUE = {
@@ -78,6 +84,6 @@
       reference: 'variable',
       escape: 'subst',
     },
-    contains: [DIRECTORY, TUPLE, VALUE, VARIABLE],
+    contains: [DIRECTORY, TUPLE, VALUE, VARIABLE, COMMENT],
   }));
 })();
