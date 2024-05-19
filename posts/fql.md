@@ -1,14 +1,14 @@
 ---
-title: FQL
+title: FQL Manual
 ...
 
 ```lang-fql
 /user/index/surname("Johnson",<userID:int>)
 /user(:userID,...)
-->
+% results ->
 /user(9323,"Timothy","Johnson",37)=nil
-/user(24335,"Andrew","Johnson",23)=nil
-/user(33423,"Ryan","Johnson",54)=nil
+/user(24335,"Andrew","Johnson",42)=nil
+/user(33423,"Ryan","Johnson",0x0ffa83,42.2)=nil
 ```
 
 FQL is a query language for [Foundation
@@ -21,11 +21,11 @@ range reads are first class citizens.
 > document are not all implemented. Unimplemented features
 > will be marked as such with a callout like this one.
 
-## Introduction
+## Overview
 
-FQL queries look like key-values. They have a key (directory
-& tuple) followed by `=` and a value. FQL can only access
-keys encoded using the directory & tuple
+FQL queries generally look like key-values. They have a key
+(directory & tuple) followed by `=` and a value. FQL can
+only access keys encoded using the directory & tuple
 [layers](https://apple.github.io/foundationdb/layer-concept.html).
 
 ```lang-fql
@@ -38,13 +38,9 @@ as shown below.
 
 ```lang-fql
 /my/directory("my","tuple")=<>
-->
+% results ->
 /my/directory("my","tuple")=0x0fa0
 ```
-
-> `->` is not part of the FQL syntax. It's only used by this
-> document to separate a read query from it's exemplary
-> results.
 
 The query above has a variable `<>` as it's value. Variables
 act as placeholders for any of the supported [data
@@ -58,7 +54,7 @@ query.
 
 ```lang-fql
 /my/directory(<>,"tuple")=nil
-->
+% results ->
 /my/directory("your","tuple")=nil
 /my/directory(42,"tuple")=nil
 ```
@@ -68,7 +64,7 @@ by ending the key's tuple with `...`.
 
 ```lang-fql
 /my/directory("my","tuple",...)=<>
-->
+% results ->
 /my/directory("my","tuple")=0x0fa0
 /my/directory("my","tuple",47.3)=0x8f3a
 /my/directory("my","tuple",false,0xff9a853c12)=nil
@@ -80,7 +76,7 @@ above.
 
 ```lang-fql
 /my/directory("my","tuple",...)
-->
+% results ->
 /my/directory("my","tuple")=0x0fa0
 /my/directory("my","tuple",47.3)=0x8f3a
 /my/directory("my","tuple",false,0xff9a853c12)=nil
@@ -91,24 +87,27 @@ the read on all directory paths matching the schema.
 
 ```lang-fql
 /<>/directory("my","tuple")
-->
+% results ->
 /my/directory("my","tuple")=0x0fa0
 /your/directory("my","tuple")=nil
 ```
 
+The next two sections of this document elaborate on the
+language's grammar and semantics. If you wish to immediately
+see more examples of the language in practice, skip to
+[design recipes](#design-recipes).
+
 ## Grammar
 
-This section elaborates on the grammar and structure of FQL
-queries. FQL is a context-free language with a formal
+This section details the grammatical structure of an FQL
+query. FQL is a context-free language with a formal
 [definition](https://github.com/janderland/fdbq/blob/main/syntax.ebnf).
-For elaborations on what queries mean and how they're
-implemented, see [Semantics](#semantics).
 
 ### Key-Values
 
-FQL queries are structured like key-values and are written
-as a [directory](#Directory), [tuple](#Tuple), `=`, and
-value appended together.
+Most FQL queries are structured like key-values and are
+written as a [directory](#Directory), [tuple](#Tuple), `=`,
+and value appended together.
 
 ```lang-fql
 /app/data("server A",0)=0xabcf03
@@ -189,6 +188,8 @@ elements as the [tuple
 layer](https://github.com/apple/foundationdb/blob/main/design/tuple.md).
 Example instances of these types can be seen below.
 
+TODO: Give deeper descriptions of the types.
+
 | Type     | Example                                |
 |:---------|:---------------------------------------|
 | `nil`    | `nil`                                  |
@@ -218,6 +219,30 @@ A variable may be empty, including no data types.
 
 ```lang-fql
 <>
+```
+
+### Comments
+
+Comments start with `%` and continue until the end of the
+line.
+
+```
+% This query will read all the first
+% names. A single name may be returned
+% multiple times.
+
+/index/name(<name:string>,...)
+```
+
+You can add comments within a tuple or after the value to
+describe the data elements.
+
+```
+/account/private(
+  <uint>,   % user ID
+  <uint>,   % group ID
+  <string>, % account name
+)=<int>     % balance in USD
 ```
 
 ## Semantics
@@ -261,7 +286,7 @@ when present in the value section.
 | `uuid`   | RFC 4122                        |
 | `tuple`  | tuple layer                     |
 
-## Index Indirection
+### Index Indirection
 
 TODO: Finish section.
 
@@ -270,11 +295,15 @@ TODO: Finish section.
 /user/entry(:userID,...)
 ```
 
-## Transaction Boundaries
+### Transaction Boundaries
 
 TODO: Finish section.
 
-## Language Integration
+## Design Recipes
+
+TODO: Finish section.
+
+## As a Layer
 
 When integrating SQL into other languages, there are usually
 two choices each with their own drawbacks:
