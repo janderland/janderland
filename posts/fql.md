@@ -2,6 +2,12 @@
 title: FQL Manual
 ...
 
+## TODO
+
+- Only allow `...` in the key's root tuple.
+- Better descriptions for data elements.
+- Support unicode strings.
+
 ```lang-fql
 /user/index/surname("Johnson",<userID:int>)
 /user(:userID,...)
@@ -13,9 +19,9 @@ title: FQL Manual
 
 FQL is a query language for [Foundation
 DB](https://www.foundationdb.org/). FQL aims to make FDB's
-semantics feel natural and intuitive. Common patterns can be
-modeled using FQL. Index indirection and multi-transaction
-range reads are first class citizens.
+semantics feel natural and intuitive. Common FDB access
+patterns can be modeled using FQL. Index indirection and
+multi-transaction range reads are first class citizens.
 
 > FQL is a work in-progress. The features mentioned in this
 > document are not all implemented. Unimplemented features
@@ -24,8 +30,8 @@ range reads are first class citizens.
 ## Overview
 
 FQL queries generally look like key-values. They have a key
-(directory & tuple) followed by `=` and a value. FQL can
-only access keys encoded using the directory & tuple
+(directory & tuple) and value separated by `=`. FQL can only
+access keys encoded using the directory & tuple
 [layers](https://apple.github.io/foundationdb/layer-concept.html).
 
 ```lang-fql
@@ -99,9 +105,9 @@ see more examples of the language in practice, skip to
 
 ## Grammar
 
-This section details the grammatical structure of an FQL
-query. FQL is a context-free language with a formal
+FQL is a context-free language with a formal
 [definition](https://github.com/janderland/fdbq/blob/main/syntax.ebnf).
+This section elaborates on this definition.
 
 ### Key-Values
 
@@ -188,8 +194,6 @@ elements as the [tuple
 layer](https://github.com/apple/foundationdb/blob/main/design/tuple.md).
 Example instances of these types can be seen below.
 
-TODO: Give deeper descriptions of the types.
-
 | Type     | Example                                |
 |:---------|:---------------------------------------|
 | `nil`    | `nil`                                  |
@@ -226,7 +230,7 @@ A variable may be empty, including no data types.
 Comments start with `%` and continue until the end of the
 line.
 
-```
+```lang-fql
 % This query will read all the first
 % names. A single name may be returned
 % multiple times.
@@ -237,7 +241,7 @@ line.
 You can add comments within a tuple or after the value to
 describe the data elements.
 
-```
+```lang-fql
 /account/private(
   <uint>,   % user ID
   <uint>,   % group ID
@@ -247,28 +251,178 @@ describe the data elements.
 
 ## Semantics
 
-Queries have the ability to write a key-value, read one or
-more key-values, and list directories.
+FQL queries have the ability to write a single key-value,
+clear a single key-value, read one or more key-values, and
+list directories. This section elaborates on what queries do
+and how they encode/decode data.
 
-Queries without any variables result in a single key-value
-being written. You can think of these queries as explicitly
-defining a single key-value.
+Throughout this section, snippets of Go code are included to
+help explemplify what's being discussed. These snippets
+accurately showcases the DB operations in the clearest way
+possible and don't include the optimizations and concurrency
+implemented in the FQL engine.
 
-Queries with variables or `...` result in zero or more
-key-values being read. You can think of these queries as
-defining a set of possible key-values stored in the DB.
+### Writes
 
-You can further limit the set of key-values read by
-including a type constraint in the variable.
+Queries lacking a [variable](#variables) or the `...` token
+perform mutations on the database by either writing
+a key-value or clearing on existing one. Queries lacking
+a value imply an empty [variable](#variables) as the value
+and should not be confused with write queries.
 
-> Queries lacking a value section imply a variable in said
-> section and therefore do not result in a write operation.
+If the query has a [data element](#data-elements) as it's
+value then it performs a write operation.
+
+```lang-fql
+/my/dir("hello","world")=42
+```
+
+```lang-go
+db.Transact(func(tr fdb.Transaction) (interface{}, error) {
+  dir, err := directory.CreateOrOpen(tr, []string{"my", "dir"}, nil)
+  if err != nil {
+    return nil, err
+  }
+
+  val := make([]byte, 8)
+  binary.LittleEndian.PutUint64(val, 42)
+  tr.Set(dir.Pack(tuple.Tuple{"hello", "world"}), val)
+  return nil, nil
+})
+```
+
+Queries with the `clear` token as their value result in
+a key-value being cleared.
+
+```lang-fql
+/my/dir("hello","world")=clear
+```
+
+```lang-go
+db.Transact(func(tr fdb.Transaction) (interface{}, error) {
+  dir, err := directory.Open(tr, []string{"my", "dir"}, nil)
+  if err != nil {
+    if errors.Is(err, directory.ErrDirNotExists) {
+      return nil, nil
+    }
+    return nil, err
+  }
+
+  tr.Clear(dir.Pack(tuple.Tuple{"hello", "world"}))
+  return nil, nil
+})
+```
+
+### Reads
+
+If the query contains a [variable](#variables) or `...`
+token, then it performs a read. Queries lacking a value
+imply an empty [variable](#variables) as their value and are
+therefore read queries.
+
+If the query lacks a [variable](#variables) or `...` in it's
+key then it reads a single-value, if the key-value exists.
+
+```lang-fql
+/my/dir(99.8, 7dfb10d1-2493-4fb5-928e-889fdc6a7136)=<int|string>
+```
+
+```lang-go
+db.Transact(func(tr fdb.Transaction) (interface{}, error) {
+  dir, err := directory.Open(tr, []string{"my", "dir"}, nil)
+  if err != nil {
+    if errors.Is(err, directory.ErrDirNotExists) {
+      return nil, nil
+    }
+    return nil, err
+  }
+
+  val := tr.MustGet(dir.Pack(tuple.Tuple{99.8,
+    tuple.UUID{0x7d, 0xfb, 0x10, 0xd1, 0x24, 0x93, 0x4f, 0xb5, 0x92, 0x8e, 0x88, 0x9f, 0xdc, 0x6a, 0x71, 0x36}))
+  
+     
+  if len(val) == 8 {
+      return binary.LittleEndian.Uint64(val), nil
+  }
+  return string(val), nil
+})
+```
+
+Queries with [variables](#variables) or a `...` token in
+their key result in a range of key-values being read.
+
+```lang-fql
+/people(3392, <string|int>, <>)=(<uint>, ...)
+```
+
+```lang-go
+db.ReadTransact(func(tr fdb.ReadTransaction) (interface{}, error) {
+  dir, err := directory.Open(tr, []string{"people"}, nil)
+  if err != nil {
+    if errors.Is(err, directory.ErrDirNotExists) {
+      return nil, nil
+    }
+    return nil, err
+  }
+
+  rng, err := fdb.PrefixRange(dir.Pack(tuple.Tuple{3392}))
+  if err != nil {
+    return nil, err
+  }
+
+  var results []fdb.KeyValue
+  iter := tr.GetRange(rng, fdb.RangeOptions{}).Iterator()
+  for iter.Advance() {
+    kv := iter.MustGet()
+
+    tup, err := dir.Unpack(kv.Key)
+    if err != nil {
+      return nil, err
+    }
+
+    if len(tup) != 3 {
+      continue
+    }
+
+    switch tup[0].(type) {
+    default:
+      continue
+    case string | int64:
+    }
+
+    val, err := tuple.Unpack(kv.Value)
+    if err != nil {
+      continue
+    }
+    if len(val) == 0 {
+      continue
+    }
+    if _, isInt := val[0].(uint64); !isInt {
+      continue
+    }
+
+    results = append(results, kv)
+  }
+  return results, nil
+})
+```
+
+Read queries define a schema to which key-values may or
+may-not conform. In the Go snippet above, you may have
+noticed that non-conformant key-values are being filtered
+out of the results.
+
+Alternatively, FQL can throw an error when encountering
+a non-conformant key-value. This may help enforce the
+assumption that all key-values within a directory conform to
+the same schema. This behavior, and others, can be
+configured via the transaction's [options](#options).
 
 ### Data Encoding
 
-The directory and tuple layers are responsible for 
-encoding the data elements in the key section. As for the 
-value section, FDB doesn't provide a standard encoding.
+The directory and tuple layers are responsible for encoding
+the data elements in the key. As for the value, FDB doesn't
+provide a standard encoding.
 
 The table below outlines how data elements are encoded 
 when present in the value section.
