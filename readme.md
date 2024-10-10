@@ -1,8 +1,7 @@
 # Projects
 
-- [fdbq](https://github.com/janderland/fdbq) - query
-  language for [Foundation
-  DB](https://www.foundationdb.org/)
+- [fql](https://github.com/janderland/fql) - query language
+  for [Foundation DB](https://www.foundationdb.org/)
 
 - [wish banana](https://jander.land/WbClient) - shitty
   multiplayer game
