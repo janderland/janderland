@@ -1,12 +1,17 @@
 OutDir=build
 PostsDir=posts
+StyleDir=css
+ScriptDir=js
 
 IndexPage=$(OutDir)/index.html
 PostPages=$(patsubst $(PostsDir)/%.md,$(OutDir)/%.html,$(shell find $(PostsDir) -name '*.md'))
 Pages=$(IndexPage) $(PostPages)
 
+Styles=$(patsubst $(StyleDir)/%.css,$(OutDir)/$(StyleDir)/%.css,$(shell find $(StyleDir) -name '*.css'))
+Scripts=$(patsubst $(ScriptDir)/%.css,$(OutDir)/$(ScriptDir)/%.css,$(shell find $(ScriptDir) -name '*.js'))
+
 .PHONY: all
-all: $(OutDir) $(OutDir)/style.css $(Pages)
+all: $(Styles) $(Scripts) $(Pages)
 
 .PHONY: open
 open: all
@@ -17,13 +22,17 @@ clean:
 	rm -rf $(OutDir)
 
 $(IndexPage): readme.md index.tmpl index.yaml
+	@mkdir -p $$(dirname $@)
 	pandoc -t html -o $@  --template index.tmpl --metadata-file index.yaml readme.md
 
 $(OutDir)/%.html: $(PostsDir)/%.md post.tmpl
+	@mkdir -p $$(dirname $@)
 	pandoc -t html -o $(OutDir)/$*.html --template post.tmpl $<
 
-$(OutDir)/style.css: style.css
+$(OutDir)/css/%.css: css/%.css
+	@mkdir -p $$(dirname $@)
 	cp $< $@
 
-$(OutDir):
-	mkdir $@
+$(OutDir)/js/%.js: js/%.js
+	@mkdir -p $$(dirname $@)
+	cp $< $@
