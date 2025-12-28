@@ -6,7 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>${title}</title>
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
+  <link rel="stylesheet" href="css/code.css" />
   <link rel="stylesheet" href="css/style.css" />
+  <script src="js/highlight.js"></script>
+  <script src="js/fql.js"></script>
+  <script src="js/go.js"></script>
 </head>
 <body>
 <header>
@@ -16,4 +20,20 @@
 <span class="date">${date}</span>
 ${body}
 </body>
+<script>
+    hljs.highlightAll();
+    document.querySelectorAll(":not(pre) > code").forEach((e) => {
+      let bash = false;
+      for (let p = e.parentElement; p; p = p.parentElement) {
+        if (p.classList.contains("language-bash")) {
+          bash = true;
+          break;
+        }
+      }
+
+      if (bash) e.classList.add("language-bash");
+      else e.classList.add("language-fql");
+      hljs.highlightElement(e);
+    });
+</script>
 </html>

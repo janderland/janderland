@@ -7,8 +7,8 @@ IndexPage=$(OutDir)/index.html
 PostPages=$(patsubst $(PostsDir)/%.md,$(OutDir)/%.html,$(shell find $(PostsDir) -name '*.md'))
 Pages=$(IndexPage) $(PostPages)
 
-Styles=$(patsubst $(StyleDir)/%.css,$(OutDir)/$(StyleDir)/%.css,$(shell find $(StyleDir) -name '*.css'))
-Scripts=$(patsubst $(ScriptDir)/%.css,$(OutDir)/$(ScriptDir)/%.css,$(shell find $(ScriptDir) -name '*.js'))
+Styles=$(addprefix $(OutDir)/,$(shell find $(StyleDir) -name '*.css'))
+Scripts=$(addprefix $(OutDir)/,$(shell find $(ScriptDir) -name '*.js'))
 
 .PHONY: all
 all: $(Styles) $(Scripts) $(Pages)
