@@ -1,0 +1,24 @@
+@startuml
+
+participant "client-A"
+database DB
+participant "client-B"
+
+"client-A" --> DB: start transaction
+"client-B" --> DB: start transaction
+
+"client-B" <-- DB: read empty owner 
+"client-A" <-- DB: read empty owner
+
+"client-A" --> DB: write client-A is owner
+"client-B" --> DB: write client-B is owner
+
+"client-B" --> DB: commit is accepted
+"client-A" --X DB: commit is rejected
+
+"client-A" --> DB: start transaction
+"client-A" <-- DB: read client-B is owner
+"client-A" --> DB: enqueue client-A
+"client-A" --> DB: commit is accepted
+
+@enduml

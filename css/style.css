@@ -80,6 +80,11 @@ p {
   margin: 1rem 0;
 }
 
+figure {
+	margin-left: 0;
+	margin-right: 0;
+}
+
 /* Headers */
 
 h1 {
