@@ -3,6 +3,9 @@
 - [fql](https://github.com/janderland/fql) - query language
   for [Foundation DB](https://www.foundationdb.org/)
 
+- [fenv](https://github.com/janderland/fenv) - CI framework
+  for [Foundation DB](https://www.foundationdb.org/)
+
 - [wish banana](https://jander.land/WbClient) - shitty
   multiplayer game
 
