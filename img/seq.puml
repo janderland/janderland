@@ -1,5 +1,14 @@
 @startuml
 
+<style>
+document {
+	BackgroundColor #393939
+	LineColor #E8E6DF
+	FontColor #E8E6DF
+	FontName Roboto
+}
+</style>
+
 participant "client-A"
 database DB
 participant "client-B"
