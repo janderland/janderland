@@ -22,21 +22,14 @@
 ${body}
 </body>
 <script>
-    hljs.highlightAll();
-    /*
-    document.querySelectorAll(":not(pre) > code").forEach((e) => {
-      let bash = false;
-      for (let p = e.parentElement; p; p = p.parentElement) {
-        if (p.classList.contains("language-bash")) {
-          bash = true;
-          break;
-        }
-      }
+  document.querySelectorAll('.fql, .go').forEach(e => {
+    e.classList.replace('fql', 'language-fql');
+    e.classList.replace('go', 'language-go');
+  });
 
-      if (bash) e.classList.add("language-bash");
-      else e.classList.add("language-fql");
-      hljs.highlightElement(e);
-    });
-    */
+  hljs.highlightAll();
+  document.querySelectorAll(":not(pre) > code[class^='language-']").forEach((e) => {
+    hljs.highlightElement(e);
+  });
 </script>
 </html>

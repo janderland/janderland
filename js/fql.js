@@ -165,6 +165,7 @@
     keywords: {
       $$pattern: /[^:|]+/,
       keyword: [
+        'nil',
         'any',
         'int',
         'bool',
@@ -258,6 +259,7 @@
       TUPLE,
       VALUE,
       VARIABLE,
+      REFERENCE,
       MAYBEMORE,
       KEYWORD,
       STRING,
