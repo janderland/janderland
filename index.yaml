@@ -1,4 +1,4 @@
 title: "jander.land"
-# posts:
-#   - name: Intro to Foundation DB via a Distributed Mutex
-#     link: 20251227_mutex.html
+posts:
+  - name: Intro to Foundation DB via a Distributed Mutex
+    link: 20251227_mutex.html
