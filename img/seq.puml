@@ -27,6 +27,7 @@ queue database
 participant "client-B"
 
 "client-A" -> database <<neutral>>: start transaction
+note left: t1
 "client-B" -> database <<neutral>>: start transaction
 
 "client-B" <<-- database: read empty owner 
@@ -37,6 +38,7 @@ participant "client-B"
 
 "client-B" -> database <<success>>: commit is accepted
 "client-A" -X database <<failure>>: commit is rejected 
+note left: t2
 
 "client-A" -> database <<neutral>>: start transaction
 "client-A" <<-- database: read client-B is owner
