@@ -5,7 +5,7 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>${title}</title>
-  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto|Merriweather" rel="stylesheet" />
   <link rel="stylesheet" href="css/code.css" />
   <link rel="stylesheet" href="css/style.css" />
   <script src="js/highlight.js"></script>
@@ -18,10 +18,12 @@
 </header>
 <h1>${title}</h1>
 <span class="date">${date}</span>
+<hr>
 ${body}
 </body>
 <script>
     hljs.highlightAll();
+    /*
     document.querySelectorAll(":not(pre) > code").forEach((e) => {
       let bash = false;
       for (let p = e.parentElement; p; p = p.parentElement) {
@@ -35,5 +37,6 @@ ${body}
       else e.classList.add("language-fql");
       hljs.highlightElement(e);
     });
+    */
 </script>
 </html>

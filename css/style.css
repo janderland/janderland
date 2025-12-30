@@ -46,6 +46,11 @@ body {
 header {
   display: flex;
 
+  /* For the index header. */
+  h1 {
+    font-family: "Roboto";
+  }
+
   .jander {
     display: inline-block;
     color: var(--colorE);
@@ -89,14 +94,15 @@ figure {
 
 h1 {
   font-size: 3rem;
+  line-height: 1.25;
+  font-family: Merriweather;
 }
 
 h2 {
   font-size: 2rem;
-}
-
-h2 {
   margin: 2rem 0 0.5rem 0;
+  line-height: 1.25;
+  font-family: Merriweather;
 }
 
 /* Links */
