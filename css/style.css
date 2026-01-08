@@ -43,6 +43,12 @@ body {
   margin: 0 auto;
 }
 
+@media (max-width: 30rem) {
+  body {
+    padding: 0 max(1rem, calc(50% - 9.50rem));
+  }
+}
+
 header {
   display: flex;
 
@@ -83,6 +89,10 @@ header.home {
 
 p {
   margin: 1rem 0;
+}
+
+ul {
+  padding-left: 1rem;
 }
 
 figure {
