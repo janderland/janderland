@@ -11,9 +11,10 @@ Pages=$(IndexPage) $(PostPages)
 Styles=$(addprefix $(OutDir)/,$(shell find $(StyleDir) -name '*.css'))
 Scripts=$(addprefix $(OutDir)/,$(shell find $(ScriptDir) -name '*.js'))
 Images=$(patsubst $(ImageDir)/%.puml,$(OutDir)/$(ImageDir)/%.svg,$(shell find $(ImageDir) -name '*.puml'))
+Cname=$(OutDir)/CNAME
 
 .PHONY: all
-all: $(Styles) $(Scripts) $(Images) $(Pages)
+all: $(Styles) $(Scripts) $(Images) $(Cname) $(Pages)
 
 .PHONY: open
 open: all
@@ -40,5 +41,9 @@ $(OutDir)/$(StyleDir)/%.css: $(StyleDir)/%.css
 	cp $< $@
 
 $(OutDir)/$(ScriptDir)/%.js: $(ScriptDir)/%.js
+	@mkdir -p $$(dirname $@)
+	cp $< $@
+
+$(OutDir)/CNAME: CNAME
 	@mkdir -p $$(dirname $@)
 	cp $< $@
