@@ -48,11 +48,11 @@ I'm on my way to a small office where 23 single, young
 adults are defining tomorrow by disrupting today. We're
 competing with conglomerates and fighting for the little
 guy. The planet needs our work to rid itself of economic
-efficiencies. We are the saviors of the first world.
+inefficiencies. We are the saviors of the first world.
 
 Just as I can manipulate my mood with the right molecular
 mixture, our company can manipulate the digital landscape
-for the better. Our services are essential.
+for the better. Our services are essential and timely.
 
 TODO: Make analogy of company being chocolate cake.
 
