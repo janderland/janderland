@@ -39,12 +39,13 @@ body {
 
   line-height: 1.75;
   max-width: 29rem;
-  padding: 0 1.5rem;
+  padding: 0 1rem;
   margin: 0 auto;
 }
 
+/* On mobile, the home page needs extra padding to center the staggered header. */
 @media (max-width: 30rem) {
-  body {
+  body:has(header.home) {
     padding: 0 max(1rem, calc(50% - 9.50rem));
   }
 }
