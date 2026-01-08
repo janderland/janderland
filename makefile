@@ -7,13 +7,14 @@ ImageDir=img
 IndexPage=$(OutDir)/index.html
 PostPages=$(patsubst $(PostsDir)/%.md,$(OutDir)/%.html,$(shell find $(PostsDir) -name '*.md'))
 Pages=$(IndexPage) $(PostPages)
+Feed=$(OutDir)/feed.xml
 
 Styles=$(addprefix $(OutDir)/,$(shell find $(StyleDir) -name '*.css'))
 Scripts=$(addprefix $(OutDir)/,$(shell find $(ScriptDir) -name '*.js'))
 Images=$(patsubst $(ImageDir)/%.puml,$(OutDir)/$(ImageDir)/%.svg,$(shell find $(ImageDir) -name '*.puml'))
 
 .PHONY: all
-all: $(Styles) $(Scripts) $(Images) $(Pages)
+all: $(Styles) $(Scripts) $(Images) $(Pages) $(Feed)
 
 .PHONY: open
 open: all
@@ -42,3 +43,7 @@ $(OutDir)/$(StyleDir)/%.css: $(StyleDir)/%.css
 $(OutDir)/$(ScriptDir)/%.js: $(ScriptDir)/%.js
 	@mkdir -p $$(dirname $@)
 	cp $< $@
+
+$(Feed): $(wildcard $(PostsDir)/*.md) rss.sh
+	@mkdir -p $$(dirname $@)
+	./rss.sh $(PostsDir) https://jander.land > $@
