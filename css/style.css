@@ -38,8 +38,8 @@ body {
   color: var(--color5);
 
   line-height: 1.75;
-  max-width: 40rem;
-  padding: 0 0.6rem;
+  max-width: 29rem;
+  padding: 0 1.5rem;
   margin: 0 auto;
 }
 
@@ -54,26 +54,26 @@ header {
   .jander {
     display: inline-block;
     color: var(--colorE);
-    font-size: 25px;
+    font-size: 1.55rem;
   }
 
   .land {
     display: inline-block;
     color: var(--colorD);
-    font-size: 22px;
+    font-size: 1.40rem;
   }
 }
 
 header.home {
-  padding-left: 120px;
+  padding-left: 7.50rem;
 
   .jander {
-    font-size: 100px;
-    margin-left: -120px;
+    font-size: 6.25rem;
+    margin-left: -7.50rem;
   }
 
   .land {
-    font-size: 85px;
+    font-size: 5.30rem;
   }
 }
 
