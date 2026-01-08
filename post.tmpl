@@ -6,11 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>${title}</title>
   <link href="https://fonts.googleapis.com/css?family=Roboto|Merriweather" rel="stylesheet" />
+$if(languages)$
   <link rel="stylesheet" href="css/code.css" />
+$endif$
   <link rel="stylesheet" href="css/style.css" />
+$if(languages)$
   <script src="js/highlight.js"></script>
-  <script src="js/fql.js"></script>
-  <script src="js/go.js"></script>
+$for(languages)$
+  <script src="js/$languages$.js"></script>
+$endfor$
+  <script src="js/init-highlighting.js"></script>
+$endif$
 </head>
 <body>
 <header>
@@ -21,15 +27,9 @@
 <hr>
 ${body}
 </body>
+$if(languages)$
 <script>
-  document.querySelectorAll('.fql, .go').forEach(e => {
-    e.classList.replace('fql', 'language-fql');
-    e.classList.replace('go', 'language-go');
-  });
-
-  hljs.highlightAll();
-  document.querySelectorAll(":not(pre) > code[class^='language-']").forEach((e) => {
-    hljs.highlightElement(e);
-  });
+  initHighlighting([$for(languages)$'$languages$'$sep$, $endfor$]);
 </script>
+$endif$
 </html>
