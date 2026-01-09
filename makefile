@@ -34,7 +34,7 @@ $(OutDir)/%.html: $(PostsDir)/%.md post.tmpl
 
 $(OutDir)/$(ImageDir)/%.svg: $(ImageDir)/%.puml
 	@mkdir -p $$(dirname $@)
-	cat $< | plantuml --svg --dark-mode --pipe > $@
+	cat $< | plantuml -tsvg -darkmode -pipe > $@
 
 $(OutDir)/$(StyleDir)/%.css: $(StyleDir)/%.css
 	@mkdir -p $$(dirname $@)
