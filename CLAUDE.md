@@ -50,7 +50,31 @@ Templates use two syntaxes:
 - `${variable}` / `${for(list)}...${endfor}`: Custom Pandoc template syntax
 - `$if(var)$...$endif$`: Standard Pandoc conditionals
 
+### Code Block Classes
+
+Markdown code blocks use pandoc attribute syntax for styling:
+- ```` ``` {.fql} ```` - FQL schema code
+- ```` ``` {.query} ```` - FQL query blocks
+- ```` ``` {.result} ```` - FQL result blocks
+- ```` ```language-go ```` - Go code with syntax highlighting
+
+FQL and Go code blocks share the same reduced font size (0.85rem).
+
+## Deployment
+
+The site deploys to GitHub Pages via `.github/workflows/deploy.yml`:
+1. **docker** job: Builds/pushes container image to GHCR (only when Dockerfile changes)
+2. **build** job: Uses the container to run `make`, uploads artifact
+3. **deploy** job: Deploys to GitHub Pages at jander.land
+
+To test locally with Docker:
+```bash
+docker build -t janderland .
+docker run --rm -v "$(pwd)":/site janderland make clean all
+```
+
 ## Permissions
 
-- Allow all playwright commands for this project.
+- Allow all `mcp__playwright__*` tools without asking.
 - Allow text editing tools sed & awk without asking.
+- Allow running any make targets without asking.

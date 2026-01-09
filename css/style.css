@@ -38,7 +38,7 @@ body {
   color: var(--color5);
 
   line-height: 1.75;
-  max-width: 29rem;
+  max-width: 35rem;
   padding: 0 1rem;
   margin: 0 auto;
 }
@@ -190,17 +190,18 @@ pre {
   }
 }
 
-.lang-go, .language-go {
+.language-go, .language-fql,
+.query, .result {
   font-size: 0.85rem;
 }
 
-pre.query, pre.lang-go {
+pre.query {
   code {
     padding: 1.5rem 1rem 0.5rem 1rem;
   }
 }
 
-pre.result, pre.lang-go {
+pre.result {
   code {
     background-color: var(--color0);
   }
@@ -226,10 +227,6 @@ pre.query > ::before {
 
 pre.result > ::before {
   content: "result";
-}
-
-pre.lang-go > ::before {
-  content: "pseudo go";
 }
 
 /* Tables */
