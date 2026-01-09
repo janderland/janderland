@@ -4,6 +4,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     make \
     pandoc \
     default-jre-headless \
+    graphviz \
     wget \
     && rm -rf /var/lib/apt/lists/*
 
