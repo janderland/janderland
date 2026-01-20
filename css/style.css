@@ -49,8 +49,8 @@ body {
     padding: 0 max(1rem, calc(50% - 9.50rem));
   }
 
-  /* Non-project items stack vertically */
-  .content-item:not([data-type="project"]) {
+  /* Non-project/profile items stack vertically */
+  .content-item:not([data-type="project"]):not([data-type="profile"]) {
     width: 100%;
     max-width: 100%;
   }
