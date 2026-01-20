@@ -90,11 +90,20 @@ function renderContentList(items) {
     }
     link.appendChild(title);
 
+    // Show date and tags on hover
+    const meta = document.createElement('span');
+    meta.className = 'meta';
+    const parts = [];
+    if (item.date) {
+      // Use last 2 digits of year (2025-12-27 -> 25-12-27)
+      parts.push(item.date.substring(2));
+    }
     if (item.tags && item.tags.length > 0) {
-      const tags = document.createElement('span');
-      tags.className = 'tags';
-      tags.textContent = item.tags.join(', ');
-      link.appendChild(tags);
+      parts.push(item.tags.join(' '));
+    }
+    if (parts.length > 0) {
+      meta.textContent = parts.join(' · ');
+      link.appendChild(meta);
     }
 
     contentList.appendChild(link);

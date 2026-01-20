@@ -326,7 +326,7 @@ table {
   flex-direction: column;
   text-decoration: none;
   padding: 0.25rem 0;
-  max-width: min(100%, 12rem);
+  max-width: min(100%, 16rem);
 }
 
 .content-item:hover .title {
@@ -347,8 +347,8 @@ table {
   font-weight: bold;
 }
 
-/* Tags shown on hover, truncated to fit */
-.content-item .tags {
+/* Date and tags shown on hover, truncated to fit */
+.content-item .meta {
   font-size: 0.7rem;
   color: var(--color4);
   white-space: nowrap;
@@ -359,7 +359,7 @@ table {
   transition: max-height 0.15s ease, opacity 0.15s ease;
 }
 
-.content-item:hover .tags {
-  max-height: 1.2em;
+.content-item:hover .meta {
+  max-height: 1.5em;
   opacity: 1;
 }
