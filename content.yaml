@@ -54,7 +54,24 @@ items:
     date: 2017-07-16
     url: https://github.com/janderland/Maker/releases/tag/v1.0.0
 
-  # Dateless items - randomly placed throughout the list
+  # pipe.nvim releases
+  - title: "pipe.nvim: horizontal split default"
+    tags: [release, pipe.nvim, neovim, lua]
+    date: 2026-01-14
+    url: https://github.com/janderland/pipe.nvim/releases/tag/v0.1.1
+
+  - title: "pipe.nvim: initial release"
+    tags: [release, pipe.nvim, neovim, lua]
+    date: 2026-01-14
+    url: https://github.com/janderland/pipe.nvim/releases/tag/v0.1.0
+
+  # wish banana releases
+  - title: "wish banana: TypeScript rewrite"
+    tags: [release, wish banana, gaming, typescript]
+    date: 2026-01-19
+    url: https://github.com/janderland/wishbanana/releases/tag/v1
+
+  # Dateless items - projects at the start
   - title: "fql"
     subtitle: "query language for Foundation DB"
     tags: [project, fdb, go]
@@ -65,15 +82,21 @@ items:
     tags: [project, fdb, go]
     url: https://github.com/janderland/fenv
 
-  - title: "maker"
-    subtitle: "make-based build system"
-    tags: [project, make]
-    url: https://github.com/janderland/Maker
+  - title: "pipe.nvim"
+    subtitle: "explore and filter shell output"
+    tags: [project, neovim, lua]
+    url: https://github.com/janderland/pipe.nvim
 
   - title: "wish banana"
     subtitle: "shitty multiplayer game"
     tags: [project, gaming]
     url: https://wishbanana.com
+    source: https://github.com/janderland/wishbanana
+
+  - title: "maker"
+    subtitle: "make-based build system"
+    tags: [project, make]
+    url: https://github.com/janderland/Maker
 
   - title: "the lagoon"
     subtitle: "mod for Trespasser"
