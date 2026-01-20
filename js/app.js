@@ -72,6 +72,8 @@ function renderContentList(items) {
     // Set data-type for styling
     if (item.tags && item.tags.includes('project')) {
       link.dataset.type = 'project';
+    } else if (item.tags && item.tags.includes('profile')) {
+      link.dataset.type = 'profile';
     }
 
     const title = document.createElement('span');
