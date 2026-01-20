@@ -44,9 +44,15 @@ body {
 }
 
 /* On mobile, the home page needs extra padding to center the staggered header. */
-@media (max-width: 30rem) {
+@media (max-width: 40rem) {
   body:has(header.home) {
     padding: 0 max(1rem, calc(50% - 9.50rem));
+  }
+
+  /* Non-project items stack vertically */
+  .content-item:not([data-type="project"]) {
+    width: 100%;
+    max-width: 100%;
   }
 }
 
@@ -279,4 +285,79 @@ table {
       border-bottom-right-radius: 0.5rem;
     }
   }
+}
+
+/* Content Browser */
+
+/* Filter bar - horizontal list of tag buttons */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 1rem 0;
+}
+
+.filter-button {
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--color4);
+  border-radius: 1rem;
+  background: transparent;
+  color: var(--color5);
+  cursor: pointer;
+  font-family: "Roboto", sans-serif;
+}
+
+.filter-button:hover {
+  border-color: var(--colorA);
+  color: var(--colorA);
+}
+
+.filter-button.active {
+  background-color: var(--color4);
+  color: var(--colorX);
+}
+
+/* Content list - flowing inline items */
+.content-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  padding: 1rem 0;
+}
+
+/* Content item */
+.content-item {
+  display: inline-flex;
+  flex-direction: column;
+  text-decoration: none;
+  padding: 0.25rem 0;
+  max-width: min(100%, 16rem);
+}
+
+.content-item:hover .title {
+  color: var(--colorA);
+}
+
+.content-item .title {
+  color: var(--color6);
+  font-size: 1.1rem;
+}
+
+/* Project titles are bold */
+.content-item[data-type="project"] .title {
+  font-weight: bold;
+}
+
+.content-item .title .project-name {
+  font-weight: bold;
+}
+
+/* Date and tags */
+.content-item .meta {
+  font-size: 0.7rem;
+  color: var(--color4);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

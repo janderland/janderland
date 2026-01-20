@@ -1,0 +1,114 @@
+items:
+  # Dated items - sorted by date descending
+  - title: "Intro to Foundation DB via a Distributed Mutex"
+    tags: [post, fdb, go]
+    date: 2025-12-27
+    url: 20251227_mutex.html
+
+  # fql releases
+  - title: "fql: documentation, versionstamps, watch"
+    tags: [release, fql, fdb, go]
+    date: 2025-07-31
+    url: https://github.com/janderland/fql/releases/tag/v0.6.0
+
+  - title: "fql: parens for tuples, ARM Mac fix"
+    tags: [release, fql, fdb, go]
+    date: 2024-08-10
+    url: https://github.com/janderland/fql/releases/tag/v0.5.0
+
+  - title: "fql: cancel queries, quit confirm"
+    tags: [release, fql, fdb, go]
+    date: 2023-11-25
+    url: https://github.com/janderland/fql/releases/tag/v0.4.0
+
+  - title: "fql: fullscreen help, format options"
+    tags: [release, fql, fdb, go]
+    date: 2023-08-13
+    url: https://github.com/janderland/fql/releases/tag/v0.3.0
+
+  - title: "fql: fullscreen UI"
+    tags: [release, fql, fdb, go]
+    date: 2023-06-09
+    url: https://github.com/janderland/fql/releases/tag/v0.2.0
+
+  - title: "fql: initial release"
+    tags: [release, fql, fdb, go]
+    date: 2023-05-14
+    url: https://github.com/janderland/fql/releases/tag/v0.1.0
+
+  # fenv releases
+  - title: "fenv: namespaced extended images"
+    tags: [release, fenv, fdb, go]
+    date: 2025-12-27
+    url: https://github.com/janderland/fenv/releases/tag/v0.2.0
+
+  - title: "fenv: initial release"
+    tags: [release, fenv, fdb, go]
+    date: 2025-12-25
+    url: https://github.com/janderland/fenv/releases/tag/v0.1.0
+
+  # maker releases
+  - title: "maker: initial release"
+    tags: [release, maker, make]
+    date: 2017-07-16
+    url: https://github.com/janderland/Maker/releases/tag/v1.0.0
+
+  # pipe.nvim releases
+  - title: "pipe.nvim: horizontal split default"
+    tags: [release, pipe.nvim, neovim, lua]
+    date: 2026-01-14
+    url: https://github.com/janderland/pipe.nvim/releases/tag/v0.1.1
+
+  - title: "pipe.nvim: initial release"
+    tags: [release, pipe.nvim, neovim, lua]
+    date: 2026-01-14
+    url: https://github.com/janderland/pipe.nvim/releases/tag/v0.1.0
+
+  # wish banana releases
+  - title: "wish banana: TypeScript rewrite"
+    tags: [release, wish banana, gaming, typescript]
+    date: 2026-01-19
+    url: https://github.com/janderland/wishbanana/releases/tag/v1
+
+  # jander.land releases
+  - title: "jander.land: content browser with tag filtering"
+    tags: [release, jander.land, pandoc]
+    date: 2026-01-19
+    url: https://github.com/janderland/janderland/releases/tag/v2.0.0
+
+  # Dateless items - projects at the start
+  - title: "jander.land"
+    subtitle: "personal website"
+    tags: [project, pandoc]
+    url: https://github.com/janderland/janderland
+
+  - title: "fql"
+    subtitle: "query language for Foundation DB"
+    tags: [project, fdb, go]
+    url: https://github.com/janderland/fql
+
+  - title: "fenv"
+    subtitle: "CI framework for Foundation DB"
+    tags: [project, fdb, go]
+    url: https://github.com/janderland/fenv
+
+  - title: "pipe.nvim"
+    subtitle: "explore and filter shell output"
+    tags: [project, neovim, lua]
+    url: https://github.com/janderland/pipe.nvim
+
+  - title: "wish banana"
+    subtitle: "shitty multiplayer game"
+    tags: [project, gaming]
+    url: https://wishbanana.com
+    source: https://github.com/janderland/wishbanana
+
+  - title: "maker"
+    subtitle: "make-based build system"
+    tags: [project, make]
+    url: https://github.com/janderland/Maker
+
+  - title: "the lagoon"
+    subtitle: "mod for Trespasser"
+    tags: [project, gaming]
+    url: https://www.moddb.com/mods/the-lagoon
