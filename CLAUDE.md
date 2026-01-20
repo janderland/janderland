@@ -101,8 +101,15 @@ FQL and Go code blocks share the same reduced font size (0.85rem).
 ## Deployment
 
 The site deploys to GitHub Pages via `.github/workflows/deploy.yml`:
-1. **build** job: Installs pandoc, plantuml, yq; runs `make`; uploads artifact
-2. **deploy** job: Deploys to GitHub Pages at jander.land
+1. **docker** job: Builds/pushes container image to GHCR (only when Dockerfile changes)
+2. **build** job: Uses the container to run `make`, uploads artifact
+3. **deploy** job: Deploys to GitHub Pages at jander.land
+
+To test locally with Docker:
+```bash
+docker build -t janderland .
+docker run --rm -v "$(pwd)":/site janderland make clean all
+```
 
 ## Permissions
 
