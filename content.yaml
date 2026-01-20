@@ -1,5 +1,10 @@
 items:
   # Dated items - sorted by date descending
+  - title: "Cracked Art"
+    tags: [blog, art]
+    date: 2026-01-20
+    url: 20260120_old_art.html
+
   - title: "Intro to FoundationDB via a Distributed Mutex"
     tags: [blog, fdb, go]
     date: 2025-12-27
