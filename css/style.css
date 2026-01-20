@@ -316,7 +316,7 @@ table {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem 2.5rem;
+  gap: 0.5rem 1rem;
   padding: 1rem 0;
 }
 
@@ -347,19 +347,11 @@ table {
   font-weight: bold;
 }
 
-/* Date and tags shown on hover, truncated to fit */
+/* Date and tags */
 .content-item .meta {
   font-size: 0.7rem;
   color: var(--color4);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-height: 0;
-  opacity: 0;
-  transition: max-height 0.15s ease, opacity 0.15s ease;
-}
-
-.content-item:hover .meta {
-  max-height: 1.5em;
-  opacity: 1;
 }
