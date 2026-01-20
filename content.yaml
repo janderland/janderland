@@ -112,3 +112,16 @@ items:
     subtitle: "mod for Trespasser"
     tags: [project, gaming]
     url: https://www.moddb.com/mods/the-lagoon
+
+  # Dateless items - profiles after projects
+  - title: "GitHub"
+    tags: [profile]
+    url: https://github.com/janderland/
+
+  - title: "Instagram"
+    tags: [profile]
+    url: https://www.instagram.com/_jonnyboi_/
+
+  - title: "FoundationDB Forums"
+    tags: [profile, fdb]
+    url: https://forums.foundationdb.org/u/janderland/
