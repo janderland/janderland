@@ -12,10 +12,11 @@ Pages=$(IndexPage) $(PostPages)
 Styles=$(addprefix $(OutDir)/,$(shell find $(StyleDir) -name '*.css'))
 Scripts=$(addprefix $(OutDir)/,$(shell find $(ScriptDir) -name '*.js'))
 Images=$(patsubst $(ImageDir)/%.puml,$(OutDir)/$(ImageDir)/%.svg,$(shell find $(ImageDir) -name '*.puml'))
+StaticImages=$(addprefix $(OutDir)/,$(shell find $(ImageDir) -name '*.jpg' -o -name '*.png' -o -name '*.gif' -o -name '*.svg'))
 Cname=$(OutDir)/CNAME
 
 .PHONY: all
-all: $(Styles) $(Scripts) $(Images) $(Cname) $(Pages) $(ContentJson)
+all: $(Styles) $(Scripts) $(Images) $(StaticImages) $(Cname) $(Pages) $(ContentJson)
 
 .PHONY: open
 open: all
@@ -46,6 +47,10 @@ $(OutDir)/%.html: $(PostsDir)/%.md post.tmpl
 $(OutDir)/$(ImageDir)/%.svg: $(ImageDir)/%.puml
 	@mkdir -p $$(dirname $@)
 	cat $< | plantuml -tsvg -darkmode -pipe > $@
+
+$(OutDir)/$(ImageDir)/%: $(ImageDir)/%
+	@mkdir -p $$(dirname $@)
+	cp $< $@
 
 $(OutDir)/$(StyleDir)/%.css: $(StyleDir)/%.css
 	@mkdir -p $$(dirname $@)

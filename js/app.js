@@ -146,10 +146,17 @@ function updateUrlHash() {
 }
 
 function loadFiltersFromHash() {
+  activeTags.clear();
   const hash = window.location.hash.slice(1);
   if (hash) {
     hash.split(',').forEach(tag => activeTags.add(tag));
   }
+}
+
+function handleHashChange() {
+  loadFiltersFromHash();
+  renderFilterBar(getAllTags(allItems));
+  renderContentList(allItems);
 }
 
 async function init() {
@@ -158,6 +165,8 @@ async function init() {
   const tags = getAllTags(allItems);
   renderFilterBar(tags);
   renderContentList(allItems);
+
+  window.addEventListener('hashchange', handleHashChange);
 }
 
 init();
