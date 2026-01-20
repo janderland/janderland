@@ -315,11 +315,12 @@ table {
 .content-list {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 0.5rem 2.5rem;
   padding: 1rem 0;
 }
 
-/* Content item - inline, natural width based on title length */
+/* Content item */
 .content-item {
   display: inline-flex;
   flex-direction: column;
