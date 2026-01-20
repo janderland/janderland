@@ -99,7 +99,7 @@ items:
 
   - title: "wish banana"
     subtitle: "shitty multiplayer game"
-    tags: [project, gaming]
+    tags: [project, gaming, typescript]
     url: https://wishbanana.com
     source: https://github.com/janderland/wishbanana
 

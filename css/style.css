@@ -349,6 +349,11 @@ table {
   font-weight: bold;
 }
 
+/* Profile titles are italic */
+.content-item[data-type="profile"] .title {
+  font-style: italic;
+}
+
 .content-item .title .project-name {
   font-weight: bold;
 }
