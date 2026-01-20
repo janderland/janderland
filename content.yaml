@@ -55,31 +55,31 @@ items:
 
   # pipe.nvim releases
   - title: "pipe.nvim: horizontal split default"
-    tags: [release, pipe.nvim, neovim, lua]
+    tags: [release, pipe.nvim, nvim, lua]
     date: 2026-01-14
     url: https://github.com/janderland/pipe.nvim/releases/tag/v0.1.1
 
   - title: "pipe.nvim: initial release"
-    tags: [release, pipe.nvim, neovim, lua]
+    tags: [release, pipe.nvim, nvim, lua]
     date: 2026-01-14
     url: https://github.com/janderland/pipe.nvim/releases/tag/v0.1.0
 
   # wish banana releases
   - title: "wish banana: TypeScript rewrite"
-    tags: [release, wish banana, gaming, typescript]
+    tags: [release, wish banana, game, ts]
     date: 2026-01-19
     url: https://github.com/janderland/wishbanana/releases/tag/v1
 
   # jander.land releases
   - title: "jander.land: content browser with tag filtering"
-    tags: [release, jander.land, pandoc]
+    tags: [release, jander.land, pandoc, js]
     date: 2026-01-19
     url: https://github.com/janderland/janderland/releases/tag/v1
 
   # Dateless items - projects at the start
   - title: "jander.land"
     subtitle: "personal website"
-    tags: [project, pandoc]
+    tags: [project, pandoc, js]
     url: https://github.com/janderland/janderland
 
   - title: "fql"
@@ -94,12 +94,12 @@ items:
 
   - title: "pipe.nvim"
     subtitle: "explore and filter shell output"
-    tags: [project, neovim, lua]
+    tags: [project, nvim, lua]
     url: https://github.com/janderland/pipe.nvim
 
   - title: "wish banana"
     subtitle: "shitty multiplayer game"
-    tags: [project, gaming, typescript]
+    tags: [project, game, ts]
     url: https://wishbanana.com
     source: https://github.com/janderland/wishbanana
 
@@ -110,7 +110,7 @@ items:
 
   - title: "the lagoon"
     subtitle: "mod for Trespasser"
-    tags: [project, gaming]
+    tags: [project, game]
     url: https://www.moddb.com/mods/the-lagoon
 
   # Dateless items - profiles after projects
