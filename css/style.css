@@ -43,9 +43,11 @@ body {
   margin: 0 auto;
 }
 
-/* Home page: header stays constrained, other elements break out */
-body:has(header.home) {
-  /* Keep body constraints for header centering */
+/* On mobile, the home page needs extra padding to center the staggered header. */
+@media (max-width: 30rem) {
+  body:has(header.home) {
+    padding: 0 max(1rem, calc(50% - 9.50rem));
+  }
 }
 
 header {
@@ -81,12 +83,6 @@ header.home {
 
   .land {
     font-size: 5.30rem;
-  }
-}
-
-@media (max-width: 30rem) {
-  body:has(header.home) {
-    padding: 0 max(1rem, calc(50% - 9.50rem));
   }
 }
 
@@ -287,21 +283,12 @@ table {
 
 /* Content Browser */
 
-/* Full-width sections break out of body's max-width */
-.filter-bar,
-.content-list {
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
-  box-sizing: border-box;
-}
-
 /* Filter bar - horizontal list of tag buttons */
 .filter-bar {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  padding: 1rem 2rem;
-  justify-content: center;
+  padding: 1rem 0;
 }
 
 .filter-button {
@@ -329,8 +316,7 @@ table {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem 2.5rem;
-  padding: 1rem 2rem;
-  justify-content: center;
+  padding: 1rem 0;
 }
 
 /* Content item - inline, natural width based on title length */
