@@ -7,7 +7,7 @@ items:
     languages: [fql, go]
 
   # fql releases
-  - title: "fql: docs site, versionstamps, watch"
+  - title: "fql: documentation, versionstamps, watch"
     tags: [release, fql, fdb, go]
     date: 2025-07-31
     url: https://github.com/janderland/fql/releases/tag/v0.6.0

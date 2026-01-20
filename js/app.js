@@ -84,7 +84,7 @@ function renderContentList(items) {
       projectName.className = 'project-name';
       projectName.textContent = item.title.substring(0, colonIndex);
       title.appendChild(projectName);
-      title.appendChild(document.createTextNode(item.title.substring(colonIndex)));
+      title.appendChild(document.createTextNode(' - ' + item.title.substring(colonIndex + 1).trimStart()));
     } else {
       title.textContent = item.title;
     }
