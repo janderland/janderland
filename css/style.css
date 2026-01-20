@@ -338,6 +338,15 @@ table {
   font-size: 1.1rem;
 }
 
+/* Project titles are bold */
+.content-item[data-type="project"] .title {
+  font-weight: bold;
+}
+
+.content-item .title .project-name {
+  font-weight: bold;
+}
+
 /* Tags shown on hover, truncated to fit */
 .content-item .tags {
   font-size: 0.7rem;

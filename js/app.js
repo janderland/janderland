@@ -14,24 +14,28 @@ function getAllTags(items) {
   items.forEach(item => {
     (item.tags || []).forEach(tag => tags.add(tag));
   });
-  return Array.from(tags).sort();
+
+  // Sort with priority tags first, then alphabetically
+  const priorityTags = ['project', 'post', 'release'];
+  return Array.from(tags).sort((a, b) => {
+    const aIndex = priorityTags.indexOf(a);
+    const bIndex = priorityTags.indexOf(b);
+    if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
+    if (aIndex !== -1) return -1;
+    if (bIndex !== -1) return 1;
+    return a.localeCompare(b);
+  });
 }
 
-function sortAndInterleave(items) {
+function sortItems(items) {
   const dated = items.filter(item => item.date);
   const dateless = items.filter(item => !item.date);
 
   // Sort dated items by date descending (newest first)
   dated.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-  // Randomly insert dateless items throughout the list
-  const result = [...dated];
-  dateless.forEach(item => {
-    const position = Math.floor(Math.random() * (result.length + 1));
-    result.splice(position, 0, item);
-  });
-
-  return result;
+  // Place dateless items (projects) at the start
+  return [...dateless, ...dated];
 }
 
 function renderFilterBar(tags) {
@@ -58,16 +62,32 @@ function renderContentList(items) {
   contentList.innerHTML = '';
 
   const filteredItems = filterItems(items, activeTags);
-  const sortedItems = sortAndInterleave(filteredItems);
+  const sortedItems = sortItems(filteredItems);
 
   sortedItems.forEach(item => {
     const link = document.createElement('a');
     link.className = 'content-item';
     link.href = item.url;
 
+    // Set data-type for styling
+    if (item.tags && item.tags.includes('project')) {
+      link.dataset.type = 'project';
+    }
+
     const title = document.createElement('span');
     title.className = 'title';
-    title.textContent = item.title;
+
+    // For releases, wrap the project name in a span for bold styling
+    if (item.tags && item.tags.includes('release') && item.title.includes(':')) {
+      const colonIndex = item.title.indexOf(':');
+      const projectName = document.createElement('span');
+      projectName.className = 'project-name';
+      projectName.textContent = item.title.substring(0, colonIndex);
+      title.appendChild(projectName);
+      title.appendChild(document.createTextNode(item.title.substring(colonIndex)));
+    } else {
+      title.textContent = item.title;
+    }
     link.appendChild(title);
 
     if (item.tags && item.tags.length > 0) {
