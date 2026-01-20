@@ -117,8 +117,10 @@ function filterItems(items, activeTags) {
     return items;
   }
   // OR logic - show items with ANY selected tag
+  // Also include items whose title matches a selected tag
   return items.filter(item =>
-    (item.tags || []).some(tag => activeTags.has(tag))
+    (item.tags || []).some(tag => activeTags.has(tag)) ||
+    activeTags.has(item.title.toLowerCase())
   );
 }
 
