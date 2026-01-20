@@ -325,7 +325,7 @@ table {
   flex-direction: column;
   text-decoration: none;
   padding: 0.25rem 0;
-  flex-shrink: 0;
+  max-width: min(100%, 12rem);
 }
 
 .content-item:hover .title {
