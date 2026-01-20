@@ -71,7 +71,18 @@ items:
     date: 2026-01-19
     url: https://github.com/janderland/wishbanana/releases/tag/v1
 
+  # jander.land releases
+  - title: "jander.land: content browser with tag filtering"
+    tags: [release, jander.land, pandoc]
+    date: 2026-01-19
+    url: https://github.com/janderland/janderland/releases/tag/v2.0.0
+
   # Dateless items - projects at the start
+  - title: "jander.land"
+    subtitle: "personal website"
+    tags: [project, pandoc]
+    url: https://github.com/janderland/janderland
+
   - title: "fql"
     subtitle: "query language for Foundation DB"
     tags: [project, fdb, go]
