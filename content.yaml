@@ -74,7 +74,7 @@ items:
   - title: "jander.land: content browser with tag filtering"
     tags: [release, jander.land, pandoc]
     date: 2026-01-19
-    url: https://github.com/janderland/janderland/releases/tag/v2.0.0
+    url: https://github.com/janderland/janderland/releases/tag/v1
 
   # Dateless items - projects at the start
   - title: "jander.land"
