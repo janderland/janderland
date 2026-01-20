@@ -14,4 +14,9 @@ RUN wget -q -O /usr/local/bin/plantuml.jar \
     && printf '#!/bin/sh\njava -jar /usr/local/bin/plantuml.jar "$@"\n' > /usr/local/bin/plantuml \
     && chmod +x /usr/local/bin/plantuml
 
+# Install yq for YAML to JSON conversion
+RUN wget -q -O /usr/local/bin/yq \
+    https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 \
+    && chmod +x /usr/local/bin/yq
+
 WORKDIR /site
