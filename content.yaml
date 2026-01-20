@@ -79,33 +79,33 @@ items:
   # Dateless items - projects at the start
   - title: "jander.land"
     subtitle: "personal website"
-    tags: [project, jander.land, pandoc, js]
+    tags: [project, pandoc, js]
     url: https://github.com/janderland/janderland
 
   - title: "fql"
     subtitle: "query language for Foundation DB"
-    tags: [project, fql, fdb, go]
+    tags: [project, fdb, go]
     url: https://github.com/janderland/fql
 
   - title: "fenv"
     subtitle: "CI framework for Foundation DB"
-    tags: [project, fenv, fdb, go]
+    tags: [project, fdb, go]
     url: https://github.com/janderland/fenv
 
   - title: "pipe.nvim"
     subtitle: "explore and filter shell output"
-    tags: [project, pipe.nvim, nvim, lua]
+    tags: [project, nvim, lua]
     url: https://github.com/janderland/pipe.nvim
 
   - title: "wish banana"
     subtitle: "shitty multiplayer game"
-    tags: [project, wish banana, game, ts]
+    tags: [project, game, ts]
     url: https://wishbanana.com
     source: https://github.com/janderland/wishbanana
 
   - title: "maker"
     subtitle: "make-based build system"
-    tags: [project, maker, make]
+    tags: [project, make]
     url: https://github.com/janderland/Maker
 
   - title: "the lagoon"
