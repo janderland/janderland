@@ -1,6 +1,6 @@
 items:
   # Dated items - sorted by date descending
-  - title: "Intro to Foundation DB via a Distributed Mutex"
+  - title: "Intro to FoundationDB via a Distributed Mutex"
     tags: [blog, fdb, go]
     date: 2025-12-27
     url: 20251227_mutex.html
@@ -83,12 +83,12 @@ items:
     url: https://github.com/janderland/janderland
 
   - title: "fql"
-    subtitle: "query language for Foundation DB"
+    subtitle: "query language for FoundationDB"
     tags: [project, fdb, go]
     url: https://github.com/janderland/fql
 
   - title: "fenv"
-    subtitle: "CI framework for Foundation DB"
+    subtitle: "CI framework for FoundationDB"
     tags: [project, fdb, go]
     url: https://github.com/janderland/fenv
 
