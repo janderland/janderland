@@ -44,7 +44,7 @@ body {
 }
 
 /* On mobile, the home page needs extra padding to center the staggered header. */
-@media (max-width: 30rem) {
+@media (max-width: 40rem) {
   body:has(header.home) {
     padding: 0 max(1rem, calc(50% - 9.50rem));
   }
