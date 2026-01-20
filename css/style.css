@@ -43,11 +43,9 @@ body {
   margin: 0 auto;
 }
 
-/* On mobile, the home page needs extra padding to center the staggered header. */
-@media (max-width: 30rem) {
-  body:has(header.home) {
-    padding: 0 max(1rem, calc(50% - 9.50rem));
-  }
+/* Home page: header stays constrained, other elements break out */
+body:has(header.home) {
+  /* Keep body constraints for header centering */
 }
 
 header {
@@ -83,6 +81,12 @@ header.home {
 
   .land {
     font-size: 5.30rem;
+  }
+}
+
+@media (max-width: 30rem) {
+  body:has(header.home) {
+    padding: 0 max(1rem, calc(50% - 9.50rem));
   }
 }
 
@@ -279,4 +283,87 @@ table {
       border-bottom-right-radius: 0.5rem;
     }
   }
+}
+
+/* Content Browser */
+
+/* Full-width sections break out of body's max-width */
+.filter-bar,
+.content-list {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  box-sizing: border-box;
+}
+
+/* Filter bar - horizontal list of tag buttons */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  justify-content: center;
+}
+
+.filter-button {
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--color4);
+  border-radius: 1rem;
+  background: transparent;
+  color: var(--color5);
+  cursor: pointer;
+  font-family: "Roboto", sans-serif;
+}
+
+.filter-button:hover {
+  border-color: var(--colorA);
+  color: var(--colorA);
+}
+
+.filter-button.active {
+  background-color: var(--color4);
+  color: var(--colorX);
+}
+
+/* Content list - flowing inline items */
+.content-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2.5rem;
+  padding: 1rem 2rem;
+  justify-content: center;
+}
+
+/* Content item - inline, natural width based on title length */
+.content-item {
+  display: inline-flex;
+  flex-direction: column;
+  text-decoration: none;
+  padding: 0.25rem 0;
+  flex-shrink: 0;
+}
+
+.content-item:hover .title {
+  color: var(--colorA);
+}
+
+.content-item .title {
+  color: var(--color6);
+  font-size: 1.1rem;
+}
+
+/* Tags shown on hover, truncated to fit */
+.content-item .tags {
+  font-size: 0.7rem;
+  color: var(--color4);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.15s ease, opacity 0.15s ease;
+}
+
+.content-item:hover .tags {
+  max-height: 1.2em;
+  opacity: 1;
 }

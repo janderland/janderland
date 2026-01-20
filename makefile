@@ -5,6 +5,7 @@ ScriptDir=js
 ImageDir=img
 
 IndexPage=$(OutDir)/index.html
+ContentJson=$(OutDir)/content.json
 PostPages=$(patsubst $(PostsDir)/%.md,$(OutDir)/%.html,$(shell find $(PostsDir) -name '*.md'))
 Pages=$(IndexPage) $(PostPages)
 
@@ -14,19 +15,29 @@ Images=$(patsubst $(ImageDir)/%.puml,$(OutDir)/$(ImageDir)/%.svg,$(shell find $(
 Cname=$(OutDir)/CNAME
 
 .PHONY: all
-all: $(Styles) $(Scripts) $(Images) $(Cname) $(Pages)
+all: $(Styles) $(Scripts) $(Images) $(Cname) $(Pages) $(ContentJson)
 
 .PHONY: open
 open: all
 	open $(IndexPage)
 
+.PHONY: serve
+serve: all
+	miniserve $(OutDir) --index index.html
+
 .PHONY: clean
 clean:
 	rm -rf $(OutDir)
 
-$(IndexPage): readme.md index.tmpl index.yaml
+# Convert YAML to JSON at build time
+$(ContentJson): content.yaml
 	@mkdir -p $$(dirname $@)
-	pandoc -t html -o $@  --template index.tmpl --metadata-file index.yaml readme.md
+	yq -o=json $< > $@
+
+# Copy static index.html
+$(IndexPage): index.html
+	@mkdir -p $$(dirname $@)
+	cp $< $@
 
 $(OutDir)/%.html: $(PostsDir)/%.md post.tmpl
 	@mkdir -p $$(dirname $@)
