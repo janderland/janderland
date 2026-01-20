@@ -48,6 +48,12 @@ items:
     date: 2025-12-25
     url: https://github.com/janderland/fenv/releases/tag/v0.1.0
 
+  # maker releases
+  - title: "maker: initial release"
+    tags: [release, maker, make]
+    date: 2017-07-16
+    url: https://github.com/janderland/Maker/releases/tag/v1.0.0
+
   # Dateless items - randomly placed throughout the list
   - title: "fql"
     subtitle: "query language for Foundation DB"
@@ -58,6 +64,11 @@ items:
     subtitle: "CI framework for Foundation DB"
     tags: [project, fdb, go]
     url: https://github.com/janderland/fenv
+
+  - title: "maker"
+    subtitle: "make-based build system"
+    tags: [project, make]
+    url: https://github.com/janderland/Maker
 
   - title: "wish banana"
     subtitle: "shitty multiplayer game"
