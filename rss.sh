@@ -18,26 +18,18 @@ cat <<'EOF'
 EOF
 
 # Process items: filter by tag (blog or release) and must have date
-# Sort by date descending, output as RSS items
-yq -o=json '.items' content.yaml | \
-jq -r '[.[] | select(.date) | select(.tags | any(. == "blog" or . == "release"))] | sort_by(.date) | reverse | .[] | @base64' | \
-while IFS= read -r encoded; do
-    item=$(echo "$encoded" | base64 -d)
-    title=$(echo "$item" | jq -r '.title')
-    url=$(echo "$item" | jq -r '.url')
-    date_iso=$(echo "$item" | jq -r '.date')
-
+# Sort by date descending, output as tab-separated values
+yq '[.items[] | select(.date) | select(.tags | any_c(. == "blog" or . == "release"))] | sort_by(.date) | reverse | .[] | [.title, .url, .date] | @tsv' content.yaml | \
+while IFS=$'\t' read -r title url date_iso; do
     # Convert relative URLs to absolute
     if [[ ! "$url" =~ ^https?:// ]]; then
         url="${BASE_URL}/${url}"
     fi
 
-    # Convert YYYY-MM-DD to RFC 822 format (e.g., "Sat, 20 Jan 2026 00:00:00 GMT")
+    # Convert YYYY-MM-DD to RFC 822 format
     if [[ "$OSTYPE" == "darwin"* ]]; then
-        # macOS date
         pub_date=$(date -j -f "%Y-%m-%d" "$date_iso" "+%a, %d %b %Y 00:00:00 GMT" 2>/dev/null || echo "$date_iso")
     else
-        # GNU date
         pub_date=$(date -d "$date_iso" "+%a, %d %b %Y 00:00:00 GMT" 2>/dev/null || echo "$date_iso")
     fi
 
