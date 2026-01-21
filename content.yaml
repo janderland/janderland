@@ -130,3 +130,7 @@ items:
   - title: "FoundationDB Forums"
     tags: [profile, fdb]
     url: https://forums.foundationdb.org/u/janderland/
+
+  - title: "Hacker News"
+    tags: [profile]
+    url: https://news.ycombinator.com/user?id=janderland
