@@ -1,4 +1,21 @@
 items:
+  # Dateless items - profiles at the start
+  - title: "GitHub"
+    tags: [profile]
+    url: https://github.com/janderland/
+
+  - title: "Instagram"
+    tags: [profile]
+    url: https://www.instagram.com/_jonnyboi_/
+
+  - title: "FoundationDB Forums"
+    tags: [profile, fdb]
+    url: https://forums.foundationdb.org/u/janderland/
+
+  - title: "Hacker News"
+    tags: [profile]
+    url: https://news.ycombinator.com/user?id=janderland
+
   # Dated items - sorted by date descending
   - title: "Cracked Art"
     tags: [blog, art]
@@ -118,19 +135,3 @@ items:
     tags: [project, game]
     url: https://www.moddb.com/mods/the-lagoon
 
-  # Dateless items - profiles after projects
-  - title: "GitHub"
-    tags: [profile]
-    url: https://github.com/janderland/
-
-  - title: "Instagram"
-    tags: [profile]
-    url: https://www.instagram.com/_jonnyboi_/
-
-  - title: "FoundationDB Forums"
-    tags: [profile, fdb]
-    url: https://forums.foundationdb.org/u/janderland/
-
-  - title: "Hacker News"
-    tags: [profile]
-    url: https://news.ycombinator.com/user?id=janderland

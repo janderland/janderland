@@ -16,7 +16,7 @@ function getAllTags(items) {
   });
 
   // Sort with priority tags first, then alphabetically
-  const priorityTags = ['project', 'profile', 'blog', 'release'];
+  const priorityTags = ['profile', 'project', 'blog', 'release'];
   const sortedTags = Array.from(tags).sort((a, b) => {
     const aIndex = priorityTags.indexOf(a);
     const bIndex = priorityTags.indexOf(b);
