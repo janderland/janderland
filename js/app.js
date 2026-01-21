@@ -17,7 +17,7 @@ function getAllTags(items) {
 
   // Sort with priority tags first, then alphabetically
   const priorityTags = ['project', 'profile', 'blog', 'release'];
-  return Array.from(tags).sort((a, b) => {
+  const sortedTags = Array.from(tags).sort((a, b) => {
     const aIndex = priorityTags.indexOf(a);
     const bIndex = priorityTags.indexOf(b);
     if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
@@ -25,6 +25,9 @@ function getAllTags(items) {
     if (bIndex !== -1) return 1;
     return a.localeCompare(b);
   });
+
+  // Add 'all' to the front
+  return ['all', ...sortedTags];
 }
 
 function sortItems(items) {
@@ -113,7 +116,7 @@ function renderContentList(items) {
 }
 
 function filterItems(items, activeTags) {
-  if (activeTags.size === 0) {
+  if (activeTags.size === 0 || activeTags.has('all')) {
     return items;
   }
   // OR logic - show items with ANY selected tag
@@ -125,9 +128,20 @@ function filterItems(items, activeTags) {
 }
 
 function handleFilterClick(tag) {
-  if (activeTags.has(tag)) {
+  if (tag === 'all') {
+    // Clicking 'all' clears other tags and selects 'all'
+    activeTags.clear();
+    activeTags.add('all');
+  } else if (activeTags.has(tag)) {
     activeTags.delete(tag);
+    // If no tags selected, revert to 'all'
+    if (activeTags.size === 0 || (activeTags.size === 1 && activeTags.has('all'))) {
+      activeTags.clear();
+      activeTags.add('all');
+    }
   } else {
+    // Selecting another tag deselects 'all'
+    activeTags.delete('all');
     activeTags.add(tag);
   }
 
@@ -137,7 +151,7 @@ function handleFilterClick(tag) {
 }
 
 function updateUrlHash() {
-  if (activeTags.size === 0) {
+  if (activeTags.size === 0 || (activeTags.size === 1 && activeTags.has('all'))) {
     history.replaceState(null, '', window.location.pathname);
   } else {
     const hash = Array.from(activeTags).join(',');
@@ -150,6 +164,9 @@ function loadFiltersFromHash() {
   const hash = window.location.hash.slice(1);
   if (hash) {
     hash.split(',').forEach(tag => activeTags.add(tag));
+  } else {
+    // Default to 'all' when no hash
+    activeTags.add('all');
   }
 }
 
