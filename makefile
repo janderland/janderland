@@ -6,6 +6,7 @@ ImageDir=img
 
 IndexPage=$(OutDir)/index.html
 ContentJson=$(OutDir)/content.json
+RssFeed=$(OutDir)/rss.xml
 PostPages=$(patsubst $(PostsDir)/%.md,$(OutDir)/%.html,$(shell find $(PostsDir) -name '*.md'))
 Pages=$(IndexPage) $(PostPages)
 
@@ -16,7 +17,7 @@ StaticImages=$(addprefix $(OutDir)/,$(shell find $(ImageDir) -name '*.jpg' -o -n
 Cname=$(OutDir)/CNAME
 
 .PHONY: all
-all: $(Styles) $(Scripts) $(Images) $(StaticImages) $(Cname) $(Pages) $(ContentJson)
+all: $(Styles) $(Scripts) $(Images) $(StaticImages) $(Cname) $(Pages) $(ContentJson) $(RssFeed)
 
 .PHONY: open
 open: all
@@ -34,6 +35,11 @@ clean:
 $(ContentJson): content.yaml
 	@mkdir -p $$(dirname $@)
 	yq -o=json $< > $@
+
+# Generate RSS feed
+$(RssFeed): content.yaml rss.sh
+	@mkdir -p $$(dirname $@)
+	./rss.sh > $@
 
 # Copy static index.html
 $(IndexPage): index.html
