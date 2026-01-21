@@ -13,7 +13,7 @@ cat <<'EOF'
   <channel>
     <title>jander.land</title>
     <link>https://jander.land</link>
-    <description>Blog posts and releases from jander.land</description>
+    <description>posts and releases from jander.land</description>
     <atom:link href="https://jander.land/rss.xml" rel="self" type="application/rss+xml"/>
 EOF
 
