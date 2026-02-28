@@ -1,7 +1,7 @@
 // Content browser for jander.land
 
 let allItems = [];
-let activeTags = new Set();
+let activeTag = 'all';
 
 async function loadContent() {
   const response = await fetch('content.json');
@@ -51,7 +51,7 @@ function renderFilterBar(tags) {
     button.textContent = tag;
     button.dataset.tag = tag;
 
-    if (activeTags.has(tag)) {
+    if (activeTag === tag) {
       button.classList.add('active');
     }
 
@@ -64,7 +64,7 @@ function renderContentList(items) {
   const contentList = document.getElementById('content-list');
   contentList.innerHTML = '';
 
-  const filteredItems = filterItems(items, activeTags);
+  const filteredItems = filterItems(items, activeTag);
   const sortedItems = sortItems(filteredItems);
 
   sortedItems.forEach(item => {
@@ -115,35 +115,20 @@ function renderContentList(items) {
   });
 }
 
-function filterItems(items, activeTags) {
-  if (activeTags.size === 0 || activeTags.has('all')) {
+function filterItems(items, activeTag) {
+  if (activeTag === 'all') {
     return items;
   }
-  // OR logic - show items with ANY selected tag
-  // Also include items whose title matches a selected tag
+  // Show items with the selected tag or whose title matches
   return items.filter(item =>
-    (item.tags || []).some(tag => activeTags.has(tag)) ||
-    activeTags.has(item.title.toLowerCase())
+    (item.tags || []).includes(activeTag) ||
+    item.title.toLowerCase() === activeTag
   );
 }
 
 function handleFilterClick(tag) {
-  if (tag === 'all') {
-    // Clicking 'all' clears other tags and selects 'all'
-    activeTags.clear();
-    activeTags.add('all');
-  } else if (activeTags.has(tag)) {
-    activeTags.delete(tag);
-    // If no tags selected, revert to 'all'
-    if (activeTags.size === 0 || (activeTags.size === 1 && activeTags.has('all'))) {
-      activeTags.clear();
-      activeTags.add('all');
-    }
-  } else {
-    // Selecting another tag deselects 'all'
-    activeTags.delete('all');
-    activeTags.add(tag);
-  }
+  // Clicking the active tag reverts to 'all', otherwise select the clicked tag
+  activeTag = (tag === activeTag) ? 'all' : tag;
 
   updateUrlHash();
   renderFilterBar(getAllTags(allItems));
@@ -151,23 +136,17 @@ function handleFilterClick(tag) {
 }
 
 function updateUrlHash() {
-  if (activeTags.size === 0 || (activeTags.size === 1 && activeTags.has('all'))) {
+  if (activeTag === 'all') {
     history.replaceState(null, '', window.location.pathname);
   } else {
-    const hash = Array.from(activeTags).join(',');
-    history.replaceState(null, '', `#${hash}`);
+    history.replaceState(null, '', `#${activeTag}`);
   }
 }
 
 function loadFiltersFromHash() {
-  activeTags.clear();
   const hash = window.location.hash.slice(1);
-  if (hash) {
-    hash.split(',').forEach(tag => activeTags.add(tag));
-  } else {
-    // Default to 'all' when no hash
-    activeTags.add('all');
-  }
+  // Use the hash as the active tag, or default to 'all'
+  activeTag = hash || 'all';
 }
 
 function handleHashChange() {
